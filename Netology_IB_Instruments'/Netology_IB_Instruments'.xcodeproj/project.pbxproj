@@ -13,6 +13,10 @@
 		7479DD9727B5BF6D00EAD05B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7479DD9527B5BF6D00EAD05B /* Main.storyboard */; };
 		7479DD9927B5BF7700EAD05B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7479DD9827B5BF7700EAD05B /* Assets.xcassets */; };
 		7479DD9C27B5BF7700EAD05B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7479DD9A27B5BF7700EAD05B /* LaunchScreen.storyboard */; };
+		7479DDA627B5BFE400EAD05B /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7479DDA527B5BFE400EAD05B /* ProfileView.xib */; };
+		7479DDA927B5C36E00EAD05B /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479DDA827B5C36E00EAD05B /* ProfileView.swift */; };
+		7479DDB027B68BA900EAD05B /* ProfileStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7479DDAF27B68BA900EAD05B /* ProfileStoryboard.storyboard */; };
+		7479DDB327B68C4F00EAD05B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7479DDB227B68C4F00EAD05B /* ProfileViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		7479DD9827B5BF7700EAD05B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7479DD9B27B5BF7700EAD05B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7479DD9D27B5BF7700EAD05B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7479DDA527B5BFE400EAD05B /* ProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
+		7479DDA827B5C36E00EAD05B /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7479DDAF27B68BA900EAD05B /* ProfileStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileStoryboard.storyboard; sourceTree = "<group>"; };
+		7479DDB227B68C4F00EAD05B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +71,10 @@
 				7479DD9827B5BF7700EAD05B /* Assets.xcassets */,
 				7479DD9A27B5BF7700EAD05B /* LaunchScreen.storyboard */,
 				7479DD9D27B5BF7700EAD05B /* Info.plist */,
+				7479DDA527B5BFE400EAD05B /* ProfileView.xib */,
+				7479DDA827B5C36E00EAD05B /* ProfileView.swift */,
+				7479DDAF27B68BA900EAD05B /* ProfileStoryboard.storyboard */,
+				7479DDB227B68C4F00EAD05B /* ProfileViewController.swift */,
 			);
 			path = "Netology_IB_Instruments'";
 			sourceTree = "<group>";
@@ -124,9 +136,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7479DDA627B5BFE400EAD05B /* ProfileView.xib in Resources */,
 				7479DD9C27B5BF7700EAD05B /* LaunchScreen.storyboard in Resources */,
 				7479DD9927B5BF7700EAD05B /* Assets.xcassets in Resources */,
 				7479DD9727B5BF6D00EAD05B /* Main.storyboard in Resources */,
+				7479DDB027B68BA900EAD05B /* ProfileStoryboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,7 +151,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7479DDA927B5C36E00EAD05B /* ProfileView.swift in Sources */,
 				7479DD9427B5BF6D00EAD05B /* ViewController.swift in Sources */,
+				7479DDB327B68C4F00EAD05B /* ProfileViewController.swift in Sources */,
 				7479DD9027B5BF6D00EAD05B /* AppDelegate.swift in Sources */,
 				7479DD9227B5BF6D00EAD05B /* SceneDelegate.swift in Sources */,
 			);
@@ -295,7 +311,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "MikhailLukyanchikov.Netology-IB-Instruments-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -313,7 +329,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "MikhailLukyanchikov.Netology-IB-Instruments-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
