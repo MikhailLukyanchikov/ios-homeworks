@@ -11,7 +11,7 @@ import UIKit
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
-        view.backgroundColor = .brown
+        view.backgroundColor = .lightGray
         
         let imageView = UIImageView(image: UIImage(named: "image")!)
         imageView.frame = CGRect(x: 10, y: 100, width: 200, height: 200)
