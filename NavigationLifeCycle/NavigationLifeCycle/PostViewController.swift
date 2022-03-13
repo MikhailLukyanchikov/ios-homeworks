@@ -23,16 +23,20 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarBatton
         
         let imageView = UIImageView(image: UIImage(named: "image2")!)
-        imageView.frame = CGRect(x: 10, y: 100, width: 200, height: 200)
+        imageView.frame = CGRect(x: 16, y: 106, width: 150, height: 150)
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 75
         view.addSubview(imageView)
-        let myField = UITextField(frame: CGRect(x: 250, y: 200, width: 120, height: 30))
-        myField.backgroundColor = .blue
-        myField.layer.cornerRadius = 20
-        myField.textAlignment = .center
-        myField.text = "Sport"
-        view.addSubview(myField)
+        imageView.layer.borderWidth = 3
+
+        let viewLabel = UILabel(frame: CGRect(x: 135, y: 130, width: 180, height: 40))
+        viewLabel.text = "NATURE"
+        viewLabel.textColor = .black
+        viewLabel.font = .systemFont(ofSize: 18, weight: .bold)
+        viewLabel.text = "Sport"
+        view.addSubview(viewLabel)
+        viewLabel.layer.cornerRadius = 5
+        viewLabel.textAlignment = .center
         
     }
     @objc func buttonInfoClicked() {
