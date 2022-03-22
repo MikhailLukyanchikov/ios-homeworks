@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Navigation
+//  NavigationLifeCycle
 //
-//  Created by MIKHAIL on 10.02.2022.
+//  Created by MIKHAIL on 21.02.2022.
 //
 
 import UIKit
