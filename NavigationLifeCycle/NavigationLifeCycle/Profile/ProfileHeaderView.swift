@@ -17,30 +17,44 @@ final class ProfileHeaderView: UIView {
     private lazy var avatarImageView : UIImageView = {
         let profileImage = UIImage(named: "image")
         let imageView = UIImageView(image: profileImage)
-        //imageView.backgroundColor = .black
         imageView.layer.borderWidth = 3
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.widthAnchor.constraint(equalToConstant: 154).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 154).isActive = true
+        imageView.layer.masksToBounds = false
+        imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 75
         return imageView
     }()
     private lazy var fullNameLabel : UILabel = {
         let nameLabel = UILabel()
-        nameLabel.backgroundColor = .green
+        nameLabel.backgroundColor = .lightGray
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.text = "NATURE"
+        nameLabel.textColor = .black
+        nameLabel.font = .systemFont(ofSize: 18, weight: .bold)
         return nameLabel
     }()
     private lazy var statusLabel : UILabel = {
-        let birdthLabel = UILabel()
-        birdthLabel.backgroundColor = .blue
-        birdthLabel.translatesAutoresizingMaskIntoConstraints = false
-        return birdthLabel
+        let statusLabel = UILabel()
+
+        statusLabel.text = "Waiting for something..."
+        statusLabel.backgroundColor = .lightGray
+        statusLabel.textColor = .darkGray
+        statusLabel.font = .systemFont(ofSize: 14)
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
+        return statusLabel
     }()
+    
     private lazy var statusButton : UIButton = {
         let statusButton = UIButton()
-        statusButton.backgroundColor = .orange
         statusButton.translatesAutoresizingMaskIntoConstraints = false
+        statusButton.backgroundColor = .systemBlue
+        statusButton.layer.cornerRadius = 22
+        statusButton.layer.shadowColor = UIColor.black.cgColor
+        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        statusButton.layer.shadowRadius = 4
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.layer.shadowOpacity = 0.7
+        statusButton.setTitle("Show Status", for: .normal)
         statusButton.addTarget(self, action: #selector(self.didTapStatusButton), for: .touchUpInside)
         return statusButton
     }()
@@ -64,12 +78,27 @@ final class ProfileHeaderView: UIView {
         let textField = UITextField()
         textField.isHidden = true
         textField.backgroundColor = .brown
+        textField.placeholder = "Status is  "
+        textField.returnKeyType = .done
+        textField.autocapitalizationType = .words
+        textField.font = .systemFont(ofSize: 15)
+        textField.textColor = .black
+        textField.backgroundColor = .white
+        textField.borderStyle = .line
+        textField.returnKeyType = .next
+        textField.keyboardType = .default
+        textField.clearButtonMode = .always
+        textField.layer.cornerRadius = 15
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.layer.masksToBounds = true
+        textField.textAlignment = .center
         return textField
     }()
     
     private var buttonTopConstraint : NSLayoutConstraint?
     weak var delegate : ProfileHeaderViewProtocol?
+    
+    private var currentStatus : String = ""
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -85,6 +114,7 @@ final class ProfileHeaderView: UIView {
         self.labelStackView.addArrangedSubview(self.statusLabel)
         self.infoStackView.addArrangedSubview(self.avatarImageView)
         self.infoStackView.addArrangedSubview(self.labelStackView)
+ //       self.addSubview(self.avatarImageView)
         self.addSubview(self.infoStackView)
         self.addSubview(self.statusButton)
         self.addSubview(self.textField)
@@ -95,7 +125,7 @@ final class ProfileHeaderView: UIView {
         let infotopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
         let infoleadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
         let infotrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        let infoheightConstraint = self.infoStackView.heightAnchor.constraint(equalToConstant: 154)
+        let infoheightConstraint = self.infoStackView.heightAnchor.constraint(equalToConstant: 150)
         
         self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
@@ -112,11 +142,13 @@ final class ProfileHeaderView: UIView {
     @objc private func didTapStatusButton() {
             if self.textField.isHidden {
                 self.addSubview(self.textField)
-                
+                textField.text = ""
+                statusButton.setTitle("Set Status", for: .normal)
+                statusLabel.text = currentStatus
                 self.buttonTopConstraint?.isActive = false
                 let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
                 let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-                let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.infoStackView.trailingAnchor)
+                let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
                 let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
                 self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 10)
                 
@@ -125,80 +157,15 @@ final class ProfileHeaderView: UIView {
                 ].compactMap({ $0 }))
             } else {
                 self.willRemoveSubview(self.textField)
+                statusButton.setTitle("Show Status", for: .normal)
+                currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
                 self.buttonTopConstraint?.isActive = false
                 self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
                 NSLayoutConstraint.activate([self.buttonTopConstraint].compactMap({$0}))
                 
             }
-            
         self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isHidden) { [weak self] in
                    self?.textField.isHidden.toggle()
         }
     }
 }
-
-    
-
-//        private func setupView() {
-
-//        let profileImage = UIImage(named: "image")
-//        let profileImageView = UIImageView(image: profileImage)
-//        profileImageView.frame = CGRect(x: 16, y: 106, width: 150, height: 150)
-//        profileImageView.layer.masksToBounds = true
-//        profileImageView.layer.cornerRadius = 75
-//
-//        viewLabel.text = "NATURE"
-//        viewLabel.textColor = .black
-//        viewLabel.font = .systemFont(ofSize: 18, weight: .bold)
-
-//
-//        let profileButton = UIButton(frame: CGRect(x: 16, y: 280, width: 360, height: 50))
-//        profileButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-//        profileButton.setTitle("Show Status", for: .normal)
-//        profileButton.backgroundColor = .systemBlue
-//        profileButton.layer.cornerRadius = 22
-//        profileButton.layer.shadowColor = UIColor.black.cgColor
-//        profileButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-//        profileButton.layer.shadowRadius = 4
-//        profileButton.layer.shadowOpacity = 0.7
-//        profileButton.layer.shadowOpacity = 0.7
-
-//
-//        textField.placeholder = "Waiting for something..."
-//        textField.returnKeyType = .done
-//        textField.autocapitalizationType = .words
-//        textField.font = .systemFont(ofSize: 14)
-//        textField.textColor = .darkGray
-//        textField.backgroundColor = .lightGray
-//        textField.borderStyle = .none
-//        textField.returnKeyType = .next
-//        textField.keyboardType = .default
-//        textField.clearButtonMode = .always
-//        self.addSubview(textField)
-
-//
-//        changeTextField.placeholder = "Status is  "
-//        changeTextField.returnKeyType = .done
-//        changeTextField.autocapitalizationType = .words
-//        changeTextField.font = .systemFont(ofSize: 15)
-//        changeTextField.textColor = .black
-//        changeTextField.backgroundColor = .white
-//        changeTextField.borderStyle = .line
-//        changeTextField.returnKeyType = .next
-//        changeTextField.keyboardType = .default
-//        changeTextField.clearButtonMode = .always
-//        changeTextField.addTarget(self, action: #selector(statusTextChanged), for: .editingDidEnd)
-
-//    }
-
-    
-//    @objc func buttonPressed() {
-//        print ("Button pressed")
-//        let txt = textField.text!
-//        print(txt)
-//        textField.text = statusText
-//    }
-//    @objc func statusTextChanged(_ sender: Any) {
-//        statusText = changeTextField.text!
-//    }
-

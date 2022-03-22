@@ -13,7 +13,6 @@ import UIKit
         let firstButton = UIButton()
         firstButton.backgroundColor = .gray
         firstButton.setTitle("First Button", for: .normal)
-        firstButton.backgroundColor = .orange
         firstButton.translatesAutoresizingMaskIntoConstraints = false
         firstButton.addTarget(self, action: #selector(self.buttonClicked), for: .touchUpInside)
         return firstButton
@@ -48,7 +47,7 @@ import UIKit
         self.labelStackView.addArrangedSubview(self.secondButton)
         self.view.addSubview(labelStackView)
         
-        let infotopConstraint = self.labelStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 150)
+        let infotopConstraint = self.labelStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 230)
         let infoleadingConstraint = self.labelStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
         let infotrailingConstraint = self.labelStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
         let infoheightConstraint = self.labelStackView.heightAnchor.constraint(equalToConstant: 154)
