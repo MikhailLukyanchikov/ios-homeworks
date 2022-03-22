@@ -95,6 +95,8 @@ final class ProfileHeaderView: UIView {
         return textField
     }()
     
+
+    
     private var buttonTopConstraint : NSLayoutConstraint?
     weak var delegate : ProfileHeaderViewProtocol?
     
@@ -114,7 +116,6 @@ final class ProfileHeaderView: UIView {
         self.labelStackView.addArrangedSubview(self.statusLabel)
         self.infoStackView.addArrangedSubview(self.avatarImageView)
         self.infoStackView.addArrangedSubview(self.labelStackView)
- //       self.addSubview(self.avatarImageView)
         self.addSubview(self.infoStackView)
         self.addSubview(self.statusButton)
         self.addSubview(self.textField)
@@ -133,7 +134,9 @@ final class ProfileHeaderView: UIView {
         let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
         let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         let heightButtomConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-        
+    
+
+
         
         NSLayoutConstraint.activate([buttonTopConstraint, bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, imageViewAspectRatio].compactMap({$0}))
 

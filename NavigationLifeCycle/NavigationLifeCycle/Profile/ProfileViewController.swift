@@ -14,6 +14,20 @@ class ProfileViewController: UIViewController {
         view.delegate = self
         return view
     }()
+    
+    private lazy var bottomButton : UIButton = {
+        let bottomButton = UIButton()
+        bottomButton.translatesAutoresizingMaskIntoConstraints = false
+        bottomButton.backgroundColor = .systemBlue
+        bottomButton.layer.cornerRadius = 22
+        bottomButton.layer.shadowColor = UIColor.black.cgColor
+        bottomButton.layer.shadowOffset = CGSize(width: 4, height: 4)
+        bottomButton.layer.shadowRadius = 4
+        bottomButton.layer.shadowOpacity = 0.7
+        bottomButton.layer.shadowOpacity = 0.7
+        bottomButton.setTitle("Bottom Button", for: .normal)
+        return bottomButton
+    }()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +44,20 @@ class ProfileViewController: UIViewController {
     private func setupView() {
         self.view.backgroundColor = .lightGray
         self.view.addSubview(self.profileHeaderView)
+        self.view.addSubview(bottomButton)
+
         let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor)
         let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor)
         let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         self.heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 220)
-        NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, heightConstraint].compactMap({$0}))
+        
+       
+        let rightSecondButton = self.bottomButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+     
+        let bottomSecondButton = self.bottomButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        let leftButtonConstraint = self.bottomButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
+        let heighSecondButton = self.bottomButton.heightAnchor.constraint(equalToConstant: 50)
+        NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, heightConstraint,rightSecondButton, leftButtonConstraint, bottomSecondButton, heighSecondButton].compactMap({$0}))
     }
 }
 extension ProfileViewController: ProfileHeaderViewProtocol {
