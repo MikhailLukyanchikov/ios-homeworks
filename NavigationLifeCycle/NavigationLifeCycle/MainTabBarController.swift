@@ -16,12 +16,14 @@ import UIKit
     func setupTabBar() {
        let feedViewController = createNavController(vc: FeedViewController(), itemName: "Feed", itemImage: "")
        let profileViewController = createNavController(vc: ProfileViewController(), itemName: "Profile", itemImage: "")
+     //  let infoView = createNavController(vc: InfoViewController(), itemName: "Inf", itemImage: "")
        viewControllers = [feedViewController, profileViewController]
         
     }
     func createNavController(vc: UIViewController, itemName: String, itemImage: String) -> UINavigationController {
-        let item = UITabBarItem(title: itemName, image: UIImage(systemName: itemName)?.withAlignmentRectInsets(.init(top: 10, left: 0, bottom: 0, right: 0)), tag: 0)
-        item.titlePositionAdjustment = .init(horizontal: 0, vertical: 10)
+        _ = UITabBarItem(title: itemName, image: UIImage(systemName: itemName), tag: 0)
+        //let item = UITabBarItem(title: itemName, image: UIImage(systemName: itemName)?.withAlignmentRectInsets(.init(top: 10, left: 0, bottom: 0, right: 0)), tag: 0)
+       // item.titlePositionAdjustment = .init(horizontal: 0, vertical: 10)
         let navController = UINavigationController(rootViewController: vc)
         return navController
     }
