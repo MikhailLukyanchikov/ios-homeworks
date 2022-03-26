@@ -15,9 +15,9 @@ import UIKit
     }
     func setupTabBar() {
        let feedViewController = createNavController(vc: FeedViewController(), itemName: "Feed", itemImage: "")
-       let profileViewController = createNavController(vc: ProfileViewController(), itemName: "Profile", itemImage: "")
+       let logInViewController = createNavController(vc: LogInViewController(), itemName: "Profile", itemImage: "")
      //  let infoView = createNavController(vc: InfoViewController(), itemName: "Inf", itemImage: "")
-       viewControllers = [feedViewController, profileViewController]
+       viewControllers = [feedViewController, logInViewController]
         
     }
     func createNavController(vc: UIViewController, itemName: String, itemImage: String) -> UINavigationController {
