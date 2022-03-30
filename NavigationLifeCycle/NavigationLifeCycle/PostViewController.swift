@@ -13,9 +13,9 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
         title = "Post"
         view.backgroundColor = .some(.gray)
-        let post = Post()
+ //       let post = Post()
         let titleLabel = UILabel()
-        titleLabel.text = post.title
+  //      titleLabel.text = post.title
         titleLabel.font = UIFont.systemFont(ofSize: 18)
         navigationItem.titleView = titleLabel
         

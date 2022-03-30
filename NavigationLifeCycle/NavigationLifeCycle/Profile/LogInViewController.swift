@@ -96,13 +96,18 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Profile"
+        setupNavBar()
+     //   self.title = "Login"
         self.view.backgroundColor = .white
-        self.navigationController?.navigationBar.isHidden = false
         drawSelf()
     }
     deinit {
         viewDidDisappear(true)
+    }
+    private func setupNavBar() {
+        self.navigationItem.title = "Login"
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

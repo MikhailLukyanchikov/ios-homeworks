@@ -59,6 +59,6 @@ import UIKit
         navigationController?.pushViewController(postViewController, animated: true)
     }
  }
-struct Post {
-    let title: String = "Post"
-}
+//struct Post {
+//    let title: String = "Post"
+//}
