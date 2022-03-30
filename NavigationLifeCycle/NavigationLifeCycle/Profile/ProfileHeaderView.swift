@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 protocol ProfileHeaderViewProtocol : AnyObject {
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
 
@@ -95,9 +94,6 @@ final class ProfileHeaderView: UIView {
         return textField
     }()
     var tracker = 0
-    
-
-    
     private var buttonTopConstraint : NSLayoutConstraint?
     weak var delegate : ProfileHeaderViewProtocol?
     
@@ -143,39 +139,19 @@ final class ProfileHeaderView: UIView {
         let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
         let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
     
-
-
-        
         NSLayoutConstraint.activate([bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, imageViewAspectRatio, topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint].compactMap({$0}))
 
     }
-    
     @objc private func didTapStatusButton() {
             if tracker == 1 {
-        //        self.addSubview(self.textField)
                 textField.text = ""
                 statusButton.setTitle("Set Status", for: .normal)
                 statusLabel.text = currentStatus
                 tracker = 0
-//                self.buttonTopConstraint?.isActive = false
-//                let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
-//                let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-//                let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
-//                let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
-//                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 10)
-//
-//                NSLayoutConstraint.activate([
-//                    topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint, self.buttonTopConstraint
-//                ].compactMap({ $0 }))
             } else {
-        //        self.willRemoveSubview(self.textField)
                 tracker = 1
                 statusButton.setTitle("Show Status", for: .normal)
                 currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
- //               self.buttonTopConstraint?.isActive = false
-//                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
-//                NSLayoutConstraint.activate([self.buttonTopConstraint].compactMap({$0}))
-                
             }
         self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isEnabled) { [weak self] in
             self?.textField.isEnabled.toggle()
