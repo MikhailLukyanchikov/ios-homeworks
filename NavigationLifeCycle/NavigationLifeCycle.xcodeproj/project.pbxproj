@@ -20,6 +20,7 @@
 		7434419E27D8C05C00E38309 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7434419D27D8C05C00E38309 /* ProfileHeaderView.swift */; };
 		749F5F8427F46F8E00F14AF0 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F8327F46F8E00F14AF0 /* CustomTableViewCell.swift */; };
 		749F5F8B27F4CC8300F14AF0 /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */; };
+		749F5F8E27F4FCD900F14AF0 /* MyCustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F8D27F4FCD900F14AF0 /* MyCustomHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		749F5F8127F469C100F14AF0 /* resourses.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = resourses.json; sourceTree = "<group>"; };
 		749F5F8327F46F8E00F14AF0 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
+		749F5F8D27F4FCD900F14AF0 /* MyCustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 				74117AE027EE05D10062AD78 /* LogInViewController.swift */,
 				749F5F8327F46F8E00F14AF0 /* CustomTableViewCell.swift */,
 				749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */,
+				749F5F8D27F4FCD900F14AF0 /* MyCustomHeader.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -172,6 +175,7 @@
 				7434413D27C3B2AF00E38309 /* MainTabBarController.swift in Sources */,
 				74117AE127EE05D10062AD78 /* LogInViewController.swift in Sources */,
 				7434413927C3B2AF00E38309 /* AppDelegate.swift in Sources */,
+				749F5F8E27F4FCD900F14AF0 /* MyCustomHeader.swift in Sources */,
 				7434416D27D155F700E38309 /* InfoViewController.swift in Sources */,
 				7434415D27C3F57D00E38309 /* ProfileViewController.swift in Sources */,
 				749F5F8427F46F8E00F14AF0 /* CustomTableViewCell.swift in Sources */,

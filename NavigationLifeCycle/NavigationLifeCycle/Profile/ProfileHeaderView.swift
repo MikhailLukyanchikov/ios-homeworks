@@ -76,7 +76,7 @@ final class ProfileHeaderView: UIView {
     
     private lazy var textField: UITextField = {
         let textField = UITextField()
-        textField.isHidden = true
+        textField.isHidden = false
         textField.backgroundColor = .brown
         textField.placeholder = "Status is  "
         textField.returnKeyType = .done
@@ -94,6 +94,7 @@ final class ProfileHeaderView: UIView {
         textField.textAlignment = .center
         return textField
     }()
+    var tracker = 0
     
 
     
@@ -119,6 +120,8 @@ final class ProfileHeaderView: UIView {
         self.addSubview(self.infoStackView)
         self.addSubview(self.statusButton)
         self.addSubview(self.textField)
+        self.addSubview(textField)
+        self.backgroundColor = .lightGray
 
 
         let imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
@@ -132,43 +135,50 @@ final class ProfileHeaderView: UIView {
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
         let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
         let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
         let heightButtomConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
+        
+        let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+        let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
+        let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
+        let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
     
 
 
         
-        NSLayoutConstraint.activate([buttonTopConstraint, bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, imageViewAspectRatio].compactMap({$0}))
+        NSLayoutConstraint.activate([bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, imageViewAspectRatio, topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint].compactMap({$0}))
 
     }
     
     @objc private func didTapStatusButton() {
-            if self.textField.isHidden {
-                self.addSubview(self.textField)
+            if tracker == 1 {
+        //        self.addSubview(self.textField)
                 textField.text = ""
                 statusButton.setTitle("Set Status", for: .normal)
                 statusLabel.text = currentStatus
-                self.buttonTopConstraint?.isActive = false
-                let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
-                let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-                let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
-                let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
-                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 10)
-                
-                NSLayoutConstraint.activate([
-                    topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint, self.buttonTopConstraint
-                ].compactMap({ $0 }))
+                tracker = 0
+//                self.buttonTopConstraint?.isActive = false
+//                let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
+//                let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
+//                let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
+//                let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
+//                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.textField.bottomAnchor, constant: 10)
+//
+//                NSLayoutConstraint.activate([
+//                    topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint, self.buttonTopConstraint
+//                ].compactMap({ $0 }))
             } else {
-                self.willRemoveSubview(self.textField)
+        //        self.willRemoveSubview(self.textField)
+                tracker = 1
                 statusButton.setTitle("Show Status", for: .normal)
                 currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
-                self.buttonTopConstraint?.isActive = false
-                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
-                NSLayoutConstraint.activate([self.buttonTopConstraint].compactMap({$0}))
+ //               self.buttonTopConstraint?.isActive = false
+//                self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
+//                NSLayoutConstraint.activate([self.buttonTopConstraint].compactMap({$0}))
                 
             }
-        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isHidden) { [weak self] in
-                   self?.textField.isHidden.toggle()
+        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isEnabled) { [weak self] in
+            self?.textField.isEnabled.toggle()
         }
     }
 }

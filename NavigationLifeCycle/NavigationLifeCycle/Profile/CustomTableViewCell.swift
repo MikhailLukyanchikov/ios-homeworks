@@ -17,7 +17,6 @@ class CustomTableViewCell: UITableViewCell {
         author.backgroundColor = .white
         author.textColor = .black
         author.numberOfLines = 2
-        author.text = "CSKA"
         author.translatesAutoresizingMaskIntoConstraints = false
         return author
     }()
@@ -27,7 +26,6 @@ class CustomTableViewCell: UITableViewCell {
         description.textColor = .systemGray
         description.numberOfLines = 0
         description.font = .systemFont(ofSize: 14, weight: .medium)
-        description.text = "fewdwdwewefwf wedweccewcewc fewcewcececececec    sceewcecec ecececece ececece"
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
@@ -41,20 +39,17 @@ class CustomTableViewCell: UITableViewCell {
     }()
     private lazy var likes : UILabel = {
         let likes = UILabel()
-        let likesNumber : Int = 0
         likes.backgroundColor = .white
         likes.tintColor = .black
-        likes.text = "Likes: \(likesNumber)"
+        likes.font = .systemFont(ofSize: 14, weight: .medium)
         likes.translatesAutoresizingMaskIntoConstraints = false
         return likes
     }()
     private lazy var views : UILabel = {
         let views = UILabel()
-        var viewsNumber : Int = 0
         views.backgroundColor = .white
         views.font = .systemFont(ofSize: 14, weight: .medium)
         views.tintColor = .black
-        views.text = "Views: \(viewsNumber)"
         views.translatesAutoresizingMaskIntoConstraints = false
         return views
     }()
