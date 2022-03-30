@@ -29,9 +29,7 @@ class ProfileViewController: UIViewController {
         return tableView
         
     }()
-    
-    private var dataSource: [Post] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupNavBar()
@@ -78,20 +76,8 @@ extension ProfileViewController: ProfileHeaderViewProtocol {
     }
 }
 
-struct ViewModel : ViewModelProtocol {
-    let author : String
-    let description : String
-    let image : String
-    var likes : Int
-    var views : Int
-}
-var post1 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 155, views: 905)
-var post2 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 25, views: 301)
-var post3 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 922, views: 1405)
-var post4 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 5, views: 33)
-var posts = [post1, post2, post3, post4]
+ */
 
-*/
 
 
 import UIKit
@@ -120,19 +106,32 @@ class ProfileViewController : UIViewController {
     
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return posts.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableview.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 220 // 308
+        return 550 // 308
     }
 }
+
+struct Post  {
+    let author : String
+    let description : String
+    let image : String
+    var likes : Int
+    var views : Int
+}
+var post1 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 155, views: 905)
+var post2 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 25, views: 301)
+var post3 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 922, views: 1405)
+var post4 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 5, views: 33)
+var posts = [post1, post2, post3, post4]
 
 
 
