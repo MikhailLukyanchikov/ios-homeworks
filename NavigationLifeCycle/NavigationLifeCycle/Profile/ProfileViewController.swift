@@ -11,7 +11,7 @@ class ProfileViewController : UIViewController {
     let tableview: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(ProfileTableHederView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
-        table.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
+        table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         return table
     }()
     override func viewDidLoad() {
@@ -33,7 +33,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         return posts.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableview.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as? CustomTableViewCell else { return UITableViewCell() }
+        guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
         cell.configure(author: posts[indexPath.row].author, imageName: ((images[indexPath.row] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row].description, likes: posts[indexPath.row].likes, views: posts[indexPath.row].views)
         return cell
     }
