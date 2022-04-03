@@ -12,6 +12,7 @@ class ProfileViewController : UIViewController {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(ProfileTableHederView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return table
     }()
     override func viewDidLoad() {
@@ -30,16 +31,24 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return posts.count+1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else { return UITableViewCell() }
-        cell.configure(author: posts[indexPath.row].author, imageName: ((images[indexPath.row] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row].description, likes: posts[indexPath.row].likes, views: posts[indexPath.row].views)
+        guard indexPath.row != 0 else {
+            let cellStart = tableview.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+            return cellStart
+        }
+        let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+    //else { return UITableViewCell()}
+
+        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: posts[indexPath.row-1].likes, views: posts[indexPath.row-1].views)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == 0 { return 100}
         return 550 // 308
     }
+
     func tableView(_ tableView: UITableView,
             viewForHeaderInSection section: Int) -> UIView? {
        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
