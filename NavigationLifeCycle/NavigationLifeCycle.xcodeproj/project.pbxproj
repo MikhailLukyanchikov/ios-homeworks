@@ -21,6 +21,8 @@
 		749F5F8427F46F8E00F14AF0 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F8327F46F8E00F14AF0 /* PostTableViewCell.swift */; };
 		749F5F8B27F4CC8300F14AF0 /* ProfileTableHederView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */; };
 		749F5F9327F9A53000F14AF0 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F9227F9A53000F14AF0 /* PhotosTableViewCell.swift */; };
+		749F5F9627F9E22200F14AF0 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F9527F9E22200F14AF0 /* PhotosViewController.swift */; };
+		749F5F9927F9E27700F14AF0 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749F5F9827F9E27700F14AF0 /* PhotosCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +43,8 @@
 		749F5F8327F46F8E00F14AF0 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableHederView.swift; sourceTree = "<group>"; };
 		749F5F9227F9A53000F14AF0 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
+		749F5F9527F9E22200F14AF0 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		749F5F9827F9E27700F14AF0 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +101,8 @@
 				749F5F8327F46F8E00F14AF0 /* PostTableViewCell.swift */,
 				749F5F8A27F4CC8300F14AF0 /* ProfileTableHederView.swift */,
 				749F5F9227F9A53000F14AF0 /* PhotosTableViewCell.swift */,
+				749F5F9527F9E22200F14AF0 /* PhotosViewController.swift */,
+				749F5F9827F9E27700F14AF0 /* PhotosCollectionViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -171,6 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				749F5F9327F9A53000F14AF0 /* PhotosTableViewCell.swift in Sources */,
+				749F5F9927F9E27700F14AF0 /* PhotosCollectionViewCell.swift in Sources */,
+				749F5F9627F9E22200F14AF0 /* PhotosViewController.swift in Sources */,
 				7434416A27D1403F00E38309 /* PostViewController.swift in Sources */,
 				749F5F8B27F4CC8300F14AF0 /* ProfileTableHederView.swift in Sources */,
 				7434413D27C3B2AF00E38309 /* MainTabBarController.swift in Sources */,

@@ -7,6 +7,9 @@
 import UIKit
 
 class ProfileViewController : UIViewController {
+    
+    let sizeFoto = (UIScreen.main.bounds.width - 48)/4 + 56
+    let arrowSymbol = "\u{2192}"
 
     let tableview: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -35,17 +38,17 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard indexPath.row != 0 else {
-            let cellStart = tableview.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+            guard let cellStart = tableview.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell else {return UITableViewCell()}
             return cellStart
         }
-        let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
-    //else { return UITableViewCell()}
+      guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
+    else { return UITableViewCell()}
 
         cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: posts[indexPath.row-1].likes, views: posts[indexPath.row-1].views)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 { return 100}
+        if indexPath.row == 0 { return sizeFoto}
         return 550 // 308
     }
 
@@ -58,6 +61,13 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 274
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let photosViewController = PhotosViewController()
+            navigationController?.pushViewController(photosViewController, animated: true)
+        }
+    }
+    
 }
 struct Post  {
     let author : String
