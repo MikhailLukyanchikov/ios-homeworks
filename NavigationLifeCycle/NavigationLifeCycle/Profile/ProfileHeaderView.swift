@@ -121,7 +121,12 @@ final class ProfileHeaderView: UIView {
 
 
         let imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
+//        let avatarTop = self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: 16)
+//        let avatarwidth = self.avatarImageView.widthAnchor.constraint(equalToConstant: 140)
+//        let avatarheight = self.avatarImageView.heightAnchor.constraint(equalToConstant: 140)
 
+
+        
         let infotopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
         let infoleadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
         let infotrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
@@ -139,7 +144,7 @@ final class ProfileHeaderView: UIView {
         let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
         let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
     
-        NSLayoutConstraint.activate([bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, imageViewAspectRatio, topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint].compactMap({$0}))
+        NSLayoutConstraint.activate([bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint, imageViewAspectRatio ].compactMap({$0}))
 
     }
     @objc private func didTapStatusButton() {

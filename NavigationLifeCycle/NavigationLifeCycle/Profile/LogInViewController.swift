@@ -96,8 +96,8 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavBar()
-     //   self.title = "Login"
+   //     setupNavBar()
+        title = "Profile"
         self.view.backgroundColor = .white
         drawSelf()
     }

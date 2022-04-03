@@ -20,6 +20,7 @@ class ProfileViewController : UIViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Profile"
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)

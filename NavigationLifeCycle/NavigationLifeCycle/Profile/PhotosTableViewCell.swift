@@ -13,19 +13,16 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var myImage1: UIImageView = {
         let image = UIImage(named: "foto1")
         let imageView = UIImageView(image: image)
-  //      imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 6
-   //     imageView.widthAnchor.constraint(equalToConstant: sizeFoto).isActive
         return imageView
     }()
     private lazy var myImage2: UIImageView = {
         let image = UIImage(named: "foto2")
         let imageView = UIImageView(image: image)
-   //     imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
@@ -36,7 +33,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var myImage3: UIImageView = {
         let image = UIImage(named: "foto3")
         let imageView = UIImageView(image: image)
-   //     imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
@@ -47,7 +43,6 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var myImage4: UIImageView = {
         let image = UIImage(named: "foto4")
         let imageView = UIImageView(image: image)
-   //     imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .white
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.masksToBounds = false
@@ -69,7 +64,6 @@ class PhotosTableViewCell: UITableViewCell {
         label.text = "Photos"
         label.backgroundColor = .white
         label.textColor = .black
- //       label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -79,7 +73,6 @@ class PhotosTableViewCell: UITableViewCell {
         label.text = "\u{2192}"
         label.backgroundColor = .white
         label.textColor = .black
- //       label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
