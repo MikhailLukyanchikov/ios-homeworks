@@ -12,6 +12,7 @@ protocol ProfileHeaderViewProtocol : AnyObject {
 
 }
 final class ProfileHeaderView: UIView {
+    var imageViewAspectRatio : NSLayoutConstraint?
     
     private lazy var avatarImageView : UIImageView = {
         let profileImage = UIImage(named: "image")
@@ -21,6 +22,8 @@ final class ProfileHeaderView: UIView {
         imageView.layer.masksToBounds = false
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 75
+        imageView.tag = 1
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     private lazy var fullNameLabel : UILabel = {
@@ -120,13 +123,8 @@ final class ProfileHeaderView: UIView {
         self.backgroundColor = .lightGray
 
 
-        let imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
-//        let avatarTop = self.avatarImageView.topAnchor.constraint(equalTo: self.topAnchor,constant: 16)
-//        let avatarwidth = self.avatarImageView.widthAnchor.constraint(equalToConstant: 140)
-//        let avatarheight = self.avatarImageView.heightAnchor.constraint(equalToConstant: 140)
+        self.imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
 
-
-        
         let infotopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
         let infoleadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
         let infotrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)

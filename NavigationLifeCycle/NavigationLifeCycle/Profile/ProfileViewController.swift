@@ -8,8 +8,18 @@ import UIKit
 
 class ProfileViewController : UIViewController {
     
+    let myView : UIView = {
+        let view = UIView()
+        view.frame = .init(x: 70, y: 70, width: 30, height: 30)
+        view.backgroundColor = .orange
+        return view
+    }()
+    var isExpanded = false
+    
     let sizeFoto = (UIScreen.main.bounds.width - 48)/4 + 56
     let arrowSymbol = "\u{2192}"
+    private let panGestureRecognizer = UIPanGestureRecognizer()
+    private let tapGestureRecogniaer = UITapGestureRecognizer()
 
     let tableview: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -24,11 +34,58 @@ class ProfileViewController : UIViewController {
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)
+        setupGesture()
     }
     override func viewDidLayoutSubviews() {
         super .viewDidLayoutSubviews()
         tableview.frame = view.bounds
     }
+    private func setupGesture(){
+        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        tableview.addGestureRecognizer(tapGestureRecogniaer)
+        self.panGestureRecognizer.addTarget(self, action: #selector(self.habdlePanGesture(_:)))
+        tableview.addGestureRecognizer(panGestureRecognizer)
+        print("Gesture")
+    }
+
+    @objc func habdlePanGesture(_ gestureRecogniser : UIPanGestureRecognizer) {
+        self.panGestureRecognizer.addTarget(self, action: #selector(self.habdlePanGesture(_:)))
+        tableview.addGestureRecognizer(panGestureRecognizer)
+        print("AAAA")
+
+    }
+    @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
+        guard self.tapGestureRecogniaer === gestureRecogniser else { return }
+     //   self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        tableview.addGestureRecognizer(tapGestureRecogniaer)
+        self.isExpanded.toggle()
+     //   tableview.viewWithTag(2)?.alpha = self.isExpanded ? 0.2 : 1
+      //  tableview.alpha = self.isExpanded ? 0.2 : 1
+        
+        UIView.animate(withDuration: 2) {
+            self.tableview.layoutIfNeeded()
+            self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = self.isExpanded ? 0.2 : 1
+            self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = self.isExpanded ? 0 : 75
+            self.view.addSubview(self.myView)
+            self.tableview.backgroundColor = .init(white: 0.3, alpha: 0.2)
+            self.tableview.alpha = self.isExpanded ? 0.2 : 1
+            NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 300)].compactMap({$0}))
+            
+            if self.isExpanded {
+            NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 300)].compactMap({$0}))
+            } else {
+                NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 150)].compactMap({$0}))
+            }
+        } completion: {_ in
+            
+        }
+       
+        
+        print("BBB")
+    }
+    
+    
+    
 }
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

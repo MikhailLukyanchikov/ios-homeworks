@@ -10,7 +10,7 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     let screenSize = UIScreen.main.bounds.width
-    
+        
     private lazy var authorLabel : UILabel = {
         let author = UILabel()
         author.font = .systemFont(ofSize: 20, weight: .bold)
@@ -43,6 +43,7 @@ class PostTableViewCell: UITableViewCell {
         likes.tintColor = .black
         likes.font = .systemFont(ofSize: 14, weight: .medium)
         likes.translatesAutoresizingMaskIntoConstraints = false
+        likes.tag = 5
         return likes
     }()
     private lazy var views : UILabel = {

@@ -12,6 +12,7 @@ class ProfileTableHederView: UITableViewHeaderFooterView {
             let view = ProfileHeaderView(frame: .zero)
             view.translatesAutoresizingMaskIntoConstraints = false
             view.delegate = self
+            view.tag = 2
             return view
         }()
         override init(reuseIdentifier: String?) {
