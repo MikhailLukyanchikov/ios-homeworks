@@ -27,11 +27,10 @@ class ProfileTableHederView: UITableViewHeaderFooterView {
         func configureContents() {
             self.addSubview(self.profileHeaderView)
             self.backgroundColor = .lightGray
-            let topConstraint = self.profileHeaderView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
-            let leadingConstraint = self.profileHeaderView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor)
-            let trailingConstraint = self.profileHeaderView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor)
-            let heightConstraint = self.profileHeaderView.heightAnchor.constraint(equalToConstant: 274)
-            NSLayoutConstraint.activate([topConstraint, leadingConstraint, trailingConstraint, heightConstraint].compactMap({$0}))
+            NSLayoutConstraint.activate([self.profileHeaderView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+                                         self.profileHeaderView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+                                         self.profileHeaderView.trailingAnchor.constraint(equalTo:self.safeAreaLayoutGuide.trailingAnchor),
+                                         self.profileHeaderView.heightAnchor.constraint(equalToConstant: 274)].compactMap({$0}))
         }
     }
 extension ProfileTableHederView: ProfileHeaderViewProtocol {

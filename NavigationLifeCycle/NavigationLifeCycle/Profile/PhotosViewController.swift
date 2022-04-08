@@ -39,15 +39,11 @@ class PhotosViewController: UIViewController {
         setupNavBar()
         self.view.backgroundColor = .white
         self.view.addSubview(self.collectionView)
-       
-       let topConstraint = self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8)
-       let leftConstraint = self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 8)
-       let rightConstraint = self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -8)
-       let bottomConstraint = self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-       
-       NSLayoutConstraint.activate([
-           topConstraint, leftConstraint, rightConstraint, bottomConstraint
-       ])
+     
+       NSLayoutConstraint.activate([self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
+                                    self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 8),
+                                    self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -8),
+                                    self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
    }
     private func setupNavBar() {
         self.navigationItem.title = "Photo Gallery"
