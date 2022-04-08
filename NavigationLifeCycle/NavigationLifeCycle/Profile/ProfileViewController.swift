@@ -8,19 +8,31 @@ import UIKit
 
 class ProfileViewController : UIViewController {
     
-    let myView : UIView = {
-        let view = UIView()
-        view.frame = .init(x: 70, y: 70, width: 30, height: 30)
-        view.backgroundColor = .orange
-        return view
-    }()
-    var isExpanded = false
-    
+    let sizeX = UIScreen.main.bounds.width
+    let sizeY = UIScreen.main.bounds.height
+    private var isExpanded = false
     let sizeFoto = (UIScreen.main.bounds.width - 48)/4 + 56
     let arrowSymbol = "\u{2192}"
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private let tapGestureRecogniaer = UITapGestureRecognizer()
 
+     lazy var label : UILabel = {
+        let secondButton = UILabel()
+        secondButton.text = "X"
+        secondButton.textColor = .black
+        secondButton.tag = 5
+        secondButton.isHidden = true
+        secondButton.alpha = 0
+        return secondButton
+    }()
+    lazy var myView : UIImageView = {
+        let image = self.tableview.viewWithTag(2)?.viewWithTag(1)?.largeContentImage
+        let view = UIImageView(image: image)
+        view.frame = .init(x: 0, y: 200, width: sizeX, height: sizeY-400)
+        view.isHidden = true
+        view.alpha = 0
+        return view
+    }()
     let tableview: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
         table.register(ProfileTableHederView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
@@ -34,58 +46,43 @@ class ProfileViewController : UIViewController {
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)
-        setupGesture()
     }
     override func viewDidLayoutSubviews() {
         super .viewDidLayoutSubviews()
         tableview.frame = view.bounds
     }
-    private func setupGesture(){
-        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
-        tableview.addGestureRecognizer(tapGestureRecogniaer)
-        self.panGestureRecognizer.addTarget(self, action: #selector(self.habdlePanGesture(_:)))
-        tableview.addGestureRecognizer(panGestureRecognizer)
-        print("Gesture")
-    }
-
-    @objc func habdlePanGesture(_ gestureRecogniser : UIPanGestureRecognizer) {
-        self.panGestureRecognizer.addTarget(self, action: #selector(self.habdlePanGesture(_:)))
-        tableview.addGestureRecognizer(panGestureRecognizer)
-        print("AAAA")
-
-    }
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
         guard self.tapGestureRecogniaer === gestureRecogniser else { return }
-     //   self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
-        tableview.addGestureRecognizer(tapGestureRecogniaer)
         self.isExpanded.toggle()
-     //   tableview.viewWithTag(2)?.alpha = self.isExpanded ? 0.2 : 1
-      //  tableview.alpha = self.isExpanded ? 0.2 : 1
-        
-        UIView.animate(withDuration: 2) {
+        UIView.animate(withDuration: 0.5) {
             self.tableview.layoutIfNeeded()
-            self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = self.isExpanded ? 0.2 : 1
-            self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = self.isExpanded ? 0 : 75
-            self.view.addSubview(self.myView)
-            self.tableview.backgroundColor = .init(white: 0.3, alpha: 0.2)
-            self.tableview.alpha = self.isExpanded ? 0.2 : 1
-            NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 300)].compactMap({$0}))
-            
             if self.isExpanded {
-            NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 300)].compactMap({$0}))
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = 0
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = 0
+                self.view.addSubview(self.myView)
+                self.myView.alpha = 1
+                self.myView.isHidden = false
+                self.tableview.alpha = 0.2
+                UIView.animate(withDuration: 0.3,delay: 0.5) {
+                    self.myView.addSubview(self.label)
+                    self.label.frame = CGRect(x: self.sizeX-20, y: 10, width: 15, height: 15)
+                    self.label.alpha = 1
+                    self.label.isHidden = false
+
+                } completion: {_ in
+                }
             } else {
-                NSLayoutConstraint.activate([self.tableview.viewWithTag(2)?.viewWithTag(1)?.widthAnchor.constraint(equalToConstant: 150)].compactMap({$0}))
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = 1
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = 75
+                self.myView.alpha = 0
+                self.tableview.alpha = 1
+                self.tableview.willRemoveSubview(self.myView)
+                self.label.alpha = 0
+                self.label.isHidden = true
             }
         } completion: {_ in
-            
         }
-       
-        
-        print("BBB")
     }
-    
-    
-    
 }
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -97,6 +94,8 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard indexPath.row != 0 else {
             guard let cellStart = tableview.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as? PhotosTableViewCell else {return UITableViewCell()}
+            cellStart.layer.borderWidth = 5
+            cellStart.layer.borderColor = .init(gray: 0.5, alpha: 0.8)
             return cellStart
         }
       guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
@@ -107,13 +106,16 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 { return sizeFoto}
-        return 550 // 308
+        return 550
     }
 
     func tableView(_ tableView: UITableView,
             viewForHeaderInSection section: Int) -> UIView? {
        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
                    "sectionHeader") as! ProfileTableHederView
+        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        view.viewWithTag(1)?.addGestureRecognizer(tapGestureRecogniaer)
+        view.addGestureRecognizer(tapGestureRecogniaer)
        return view
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -125,7 +127,6 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(photosViewController, animated: true)
         }
     }
-    
 }
 struct Post  {
     let author : String

@@ -13,8 +13,13 @@ protocol ProfileHeaderViewProtocol : AnyObject {
 }
 final class ProfileHeaderView: UIView {
     var imageViewAspectRatio : NSLayoutConstraint?
+    var isShow = true
+    private var buttonTopConstraint : NSLayoutConstraint?
+    weak var delegate : ProfileHeaderViewProtocol?
     
-    private lazy var avatarImageView : UIImageView = {
+    private var currentStatus : String = ""
+    
+     var avatarImageView : UIImageView = {
         let profileImage = UIImage(named: "image")
         let imageView = UIImageView(image: profileImage)
         imageView.layer.borderWidth = 3
@@ -96,11 +101,7 @@ final class ProfileHeaderView: UIView {
         textField.textAlignment = .center
         return textField
     }()
-    var tracker = 0
-    private var buttonTopConstraint : NSLayoutConstraint?
-    weak var delegate : ProfileHeaderViewProtocol?
-    
-    private var currentStatus : String = ""
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -124,35 +125,33 @@ final class ProfileHeaderView: UIView {
 
 
         self.imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
-
-        let infotopConstraint = self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor)
-        let infoleadingConstraint = self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
-        let infotrailingConstraint = self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        let infoheightConstraint = self.infoStackView.heightAnchor.constraint(equalToConstant: 150)
-        
         self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
         self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
-        let leadingButtonConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20)
-        let trailingButtonConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        let bottomButtonConstraint = self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
-        let heightButtomConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-        
-        let topConstraint = self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10)
-        let leadingConstraint = self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor)
-        let trailingConstraint = self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor)
-        let heightTextFieldConstraint = self.textField.heightAnchor.constraint(equalToConstant: 34)
-    
-        NSLayoutConstraint.activate([bottomButtonConstraint, trailingButtonConstraint, leadingButtonConstraint, infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint, heightButtomConstraint, topConstraint, leadingConstraint, trailingConstraint, heightTextFieldConstraint, imageViewAspectRatio ].compactMap({$0}))
 
+        NSLayoutConstraint.activate([self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor),
+                                     self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+                                     self.infoStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+                                     self.infoStackView.heightAnchor.constraint(equalToConstant: 150),
+                                     
+                                     self.statusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+                                     self.statusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+                                     self.statusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
+                                     self.statusButton.heightAnchor.constraint(equalToConstant: 50),
+                                     
+                                     self.textField.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 10),
+                                     self.textField.leadingAnchor.constraint(equalTo: self.statusLabel.leadingAnchor),
+                                     self.textField.trailingAnchor.constraint(equalTo: self.statusLabel.trailingAnchor),
+                                     self.textField.heightAnchor.constraint(equalToConstant: 34),
+                                        
+                                    imageViewAspectRatio ].compactMap({$0}))
     }
     @objc private func didTapStatusButton() {
-            if tracker == 1 {
+        isShow.toggle()
+            if isShow {
                 textField.text = ""
                 statusButton.setTitle("Set Status", for: .normal)
                 statusLabel.text = currentStatus
-                tracker = 0
             } else {
-                tracker = 1
                 statusButton.setTitle("Show Status", for: .normal)
                 currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
             }

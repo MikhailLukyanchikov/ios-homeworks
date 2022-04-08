@@ -130,29 +130,27 @@ class LogInViewController: UIViewController {
         self.view.addSubview(self.iconImage)
         self.labelStackView.addArrangedSubview(self.textFieldLogin)
         self.labelStackView.addArrangedSubview(self.textFieldPass)
-        
-        let scrollViewTopConstraint = self.scrollView.topAnchor.constraint(equalTo: self.iconImage.bottomAnchor)
-        let scrollViewRightConstraint = self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
-        let scrollViewBottomConstraint = self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        let scrollViewLeftConstraint = self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor)
-        
-        let topConstraint = self.iconImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120)
-        let centerConstraint = self.iconImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        let heightConstraint = self.iconImage.heightAnchor.constraint(equalToConstant: 100)
-        let widthConstraint = self.iconImage.widthAnchor.constraint(equalToConstant: 100)
-        
-        let loginTopConstraint = self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120)
-        let loginLeadingConstraint = self.labelStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 16)
-        let loginWidthConstraint = self.labelStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor)
-        let loginHeightConstraint = self.labelStackView.heightAnchor.constraint(equalToConstant: 100)
-        let logintrailingConsrain = self.labelStackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -32)
-
-        let buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 16)
-        let buttonLeadingConstraint = self.statusButton.leadingAnchor.constraint(equalTo: self.labelStackView.leadingAnchor)
-        let buttonHeightConstraint = self.statusButton.heightAnchor.constraint(equalToConstant: 50)
-        let buttonWidthConstraint = self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor)
-        
-        NSLayoutConstraint.activate([topConstraint,centerConstraint,heightConstraint,widthConstraint, loginTopConstraint, loginWidthConstraint, loginLeadingConstraint, loginHeightConstraint, logintrailingConsrain, buttonTopConstraint, buttonLeadingConstraint, buttonHeightConstraint, buttonWidthConstraint, scrollViewTopConstraint, scrollViewLeftConstraint, scrollViewRightConstraint, scrollViewBottomConstraint])
+  
+        NSLayoutConstraint.activate([self.scrollView.topAnchor.constraint(equalTo: self.iconImage.bottomAnchor),
+                                     self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                                     self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                                     self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                                     
+                                     self.iconImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120),
+                                     self.iconImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                     self.iconImage.heightAnchor.constraint(equalToConstant: 100),
+                                     self.iconImage.widthAnchor.constraint(equalToConstant: 100),
+                                     
+                                     self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
+                                     self.labelStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 16),
+                                     self.labelStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+                                     self.labelStackView.heightAnchor.constraint(equalToConstant: 100),
+                                     self.labelStackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -32),
+                                     
+                                     self.statusButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 16),
+                                     self.statusButton.leadingAnchor.constraint(equalTo: self.labelStackView.leadingAnchor),
+                                     self.statusButton.heightAnchor.constraint(equalToConstant: 50),
+                                     self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor)])
     }
     @objc func buttonClicked() {
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1

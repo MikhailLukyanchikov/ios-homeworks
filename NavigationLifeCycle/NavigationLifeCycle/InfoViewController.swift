@@ -35,7 +35,6 @@ class InfoViewController: UIViewController {
         present(alert, animated: true, completion: nil)
         alert.addAction(buttonAllertYes)
         alert.addAction(buttonAllertNo)
-
         print("Alert!")
     }
 }

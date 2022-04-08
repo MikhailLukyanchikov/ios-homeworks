@@ -46,13 +46,11 @@ import UIKit
         self.labelStackView.addArrangedSubview(self.firstButton)
         self.labelStackView.addArrangedSubview(self.secondButton)
         self.view.addSubview(labelStackView)
-        
-        let infotopConstraint = self.labelStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 230)
-        let infoleadingConstraint = self.labelStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20)
-        let infotrailingConstraint = self.labelStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20)
-        let infoheightConstraint = self.labelStackView.heightAnchor.constraint(equalToConstant: 154)
-        
-        NSLayoutConstraint.activate([infotopConstraint, infoheightConstraint,infoleadingConstraint,infotrailingConstraint])
+    
+        NSLayoutConstraint.activate([self.labelStackView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant:                           230),
+                                     self.labelStackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20),
+                                     self.labelStackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20),
+                                     self.labelStackView.heightAnchor.constraint(equalToConstant: 154)])
     }
     @objc func buttonClicked() {
         let postViewController = PostViewController()
