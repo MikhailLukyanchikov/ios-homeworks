@@ -3,7 +3,8 @@ import UIKit
 class LogInViewController: UIViewController {
     
     let customColor = UIColor("#4885CC")
-    
+    let defaultPass = "12345678"
+    let defaultLogin = "admin"
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
@@ -93,6 +94,14 @@ class LogInViewController: UIViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
+    private lazy var messageLabel : UILabel = {
+       let label = UILabel()
+        label.isHidden = true
+        label.backgroundColor = .white
+        label.textColor = .red
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +134,7 @@ class LogInViewController: UIViewController {
     
     private func drawSelf() {
         self.view.addSubview(self.scrollView)
+        self.scrollView.addSubview(messageLabel)
         self.scrollView.addSubview(self.labelStackView)
         self.scrollView.addSubview(self.statusButton)
         self.view.addSubview(self.iconImage)
@@ -141,6 +151,12 @@ class LogInViewController: UIViewController {
                                      self.iconImage.heightAnchor.constraint(equalToConstant: 100),
                                      self.iconImage.widthAnchor.constraint(equalToConstant: 100),
                                      
+                                     self.messageLabel.topAnchor.constraint(equalTo: self.statusButton.bottomAnchor,constant: 10),
+                                     self.messageLabel.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 16),
+                                     self.messageLabel.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
+                                     self.messageLabel.widthAnchor.constraint(equalToConstant: 50),
+                                     self.messageLabel.heightAnchor.constraint(equalToConstant: 20),
+                                     
                                      self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
                                      self.labelStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 16),
                                      self.labelStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
@@ -150,10 +166,63 @@ class LogInViewController: UIViewController {
                                      self.statusButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 16),
                                      self.statusButton.leadingAnchor.constraint(equalTo: self.labelStackView.leadingAnchor),
                                      self.statusButton.heightAnchor.constraint(equalToConstant: 50),
-                                     self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor)])
+                                     self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor),
+                                     
+
+        
+        ])
+            
+        
     }
     @objc func buttonClicked() {
+        self.textFieldPass.layer.borderColor = UIColor.lightGray.cgColor
+        self.textFieldPass.layer.borderWidth = 0.5
+        self.textFieldLogin.layer.borderColor = UIColor.lightGray.cgColor
+        self.textFieldLogin.layer.borderWidth = 0.5
+        self.messageLabel.text = ""
+        messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
+        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
+        else {
+            if self.textFieldLogin.text!.isEmpty {
+                self.messageLabel.text = "Login is Empty"
+                self.scrollView.addSubview(messageLabel)
+                messageLabel.isHidden = false
+                self.textFieldLogin.layer.borderWidth = 3
+                self.textFieldLogin.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+            }
+            if self.textFieldPass.text!.isEmpty {
+                self.messageLabel.text = "Password is Empty"
+                self.textFieldPass.layer.borderWidth = 3
+                self.textFieldPass.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+                messageLabel.isHidden = false
+            }
+            return
+        }
+        if self.textFieldPass.text!.count < 6 {
+            self.messageLabel.text = "Password too easy, minimum count is 6 symbol"
+            messageLabel.isHidden = false
+            return
+        }
+        guard self.textFieldLogin.text == self.defaultLogin && self.textFieldPass.text == self.defaultPass else {
+            if self.textFieldLogin.text != self.defaultLogin {
+                let alert = UIAlertController(title: "Error", message: "Login Incorrect", preferredStyle: .alert)
+                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
+                present(alert, animated: true, completion: nil)
+                alert.addAction(buttonAllertYes)
+                self.messageLabel.text = "Login incorrect, default is 'admin'"
+                messageLabel.isHidden = false
+            }
+            if self.textFieldPass.text != self.defaultPass {
+                let alert = UIAlertController(title: "Error", message: "Password Incorrect", preferredStyle: .alert)
+                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
+                present(alert, animated: true, completion: nil)
+                alert.addAction(buttonAllertYes)
+                self.messageLabel.text = "Password incorrect, default is '12345678'"
+                messageLabel.isHidden = false
+            }
+            return
+        }
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }

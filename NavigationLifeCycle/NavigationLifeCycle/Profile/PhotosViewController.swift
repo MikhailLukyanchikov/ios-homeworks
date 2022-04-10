@@ -44,12 +44,12 @@ class PhotosViewController: UIViewController {
         self.view.backgroundColor = .white
         self.view.addSubview(self.collectionView)
      
-       NSLayoutConstraint.activate([self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
+        NSLayoutConstraint.activate([self.collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8),
                                     self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 8),
                                     self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -8),
                                     self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)])
-    self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
-    collectionView.addGestureRecognizer(tapGestureRecogniaer)
+        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        collectionView.addGestureRecognizer(tapGestureRecogniaer)
    }
     private func setupNavBar() {
         self.navigationItem.title = "Photo Gallery"
@@ -57,18 +57,18 @@ class PhotosViewController: UIViewController {
         
     }
        
-       private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
-           let neededWidth = width - 2 * spacing
-           let itemWidth = floor(neededWidth / Constants.itemCount)
-           return CGSize(width: itemWidth, height: itemWidth)
-       }
+   private func itemSize(for width: CGFloat, with spacing: CGFloat) -> CGSize {
+       let neededWidth = width - 2 * spacing
+       let itemWidth = floor(neededWidth / Constants.itemCount)
+       return CGSize(width: itemWidth, height: itemWidth)
+   }
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
        guard self.tapGestureRecogniaer === gestureRecogniser else { return }
         let point = gestureRecogniser.location(in: collectionView)
         if let indexPath = collectionView.indexPathForItem(at: point) {
                 let foto = self.collection[indexPath.row]
                 let view = UIImageView(image: foto)
-                UIView.animate(withDuration: 2) {
+                UIView.animate(withDuration: 2.5) {
                     self.view.addSubview(view)
                     view.frame = CGRect(x: 0, y: 200, width: Int(self.sizeX), height: Int(self.sizeX))
                     self.collectionView.alpha = 0.2
@@ -79,7 +79,6 @@ class PhotosViewController: UIViewController {
         }
     }
 }
-
    extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
        
        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

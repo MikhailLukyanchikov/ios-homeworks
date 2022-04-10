@@ -10,6 +10,8 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     let screenSize = UIScreen.main.bounds.width
+    private let tapGestureRecogniaer = UITapGestureRecognizer()
+
         
     private lazy var authorLabel : UILabel = {
         let author = UILabel()
@@ -43,7 +45,8 @@ class PostTableViewCell: UITableViewCell {
         likes.tintColor = .black
         likes.font = .systemFont(ofSize: 14, weight: .medium)
         likes.translatesAutoresizingMaskIntoConstraints = false
-        likes.tag = 5
+        likes.addGestureRecognizer(tapGestureRecogniaer)
+        likes.isUserInteractionEnabled = true
         return likes
     }()
     private lazy var views : UILabel = {
@@ -64,6 +67,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(authorLabel)
         contentView.addSubview(descriptionLabel)
         setConstraints()
+        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
     }
     
     required init?(coder: NSCoder) {
@@ -83,6 +87,35 @@ class PostTableViewCell: UITableViewCell {
         descriptionLabel.text = nil
         self.likes.text = nil
         self.views.text = nil
+    }
+    
+    @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
+       guard self.tapGestureRecogniaer === gestureRecogniser else { return }
+        print("like")
+        post1.likes += 1
+        print(post1.likes)
+        self.likes.text = "Likes" + String(post1.likes)
+
+//        let point = gestureRecogniser.location(in: contentView)
+//        if let indexPath = collectionView.indexPathForItem(at: point)
+
+        //if contentView.index(ofAccessibilityElement: point) != nil {print ("Like")}
+        
+//        if point == contentView.viewWithTag(5) {
+//
+//        }
+     //   if let indexPath = contentView.indexPathForItem(at: point) {
+//                let foto = self.collection[indexPath.row]
+//                let view = UIImageView(image: foto)
+//                UIView.animate(withDuration: 2.5) {
+//                    self.view.addSubview(view)
+//                    view.frame = CGRect(x: 0, y: 200, width: Int(self.sizeX), height: Int(self.sizeX))
+//                    self.contentView.alpha = 0.2
+//                } completion: {_ in
+//                    view.isHidden = true
+//                    self.contentView.alpha = 1
+//                }
+       // }
     }
     
     
