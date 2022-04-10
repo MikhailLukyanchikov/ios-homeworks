@@ -6,6 +6,8 @@
 //
 import UIKit
 
+
+
 class ProfileViewController : UIViewController {
     
     let sizeX = UIScreen.main.bounds.width
@@ -16,7 +18,7 @@ class ProfileViewController : UIViewController {
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private let tapGestureRecogniaer = UITapGestureRecognizer()
 
-     lazy var label : UILabel = {
+    lazy var label : UILabel = {
         let secondButton = UILabel()
         secondButton.text = "X"
         secondButton.textColor = .black
@@ -100,8 +102,9 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         }
       guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
     else { return UITableViewCell()}
-
-        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: posts[indexPath.row-1].likes, views: posts[indexPath.row-1].views)
+        
+        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: 0, views: 0)
+        cell.delegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -128,6 +131,14 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+extension ProfileViewController : PostTableViewProtocol {
+    func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 0.3, delay: 0.3) {
+        } completion: { _ in
+            completion()
+        }
+    }
+}
 struct Post  {
     let author : String
     let description : String
@@ -136,10 +147,10 @@ struct Post  {
     var views : Int
 }
 var images : [UIImage?] = [UIImage(named: "sport1"), UIImage(named: "Space1"), UIImage(named: "war2"), UIImage(named: "science1")]
-var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 155, views: 905)
-var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 25, views: 66)
-var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 922, views: 1405)
-var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 37, views: 101)
+var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 0, views: 0)
+var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 0, views: 0)
+var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 0, views: 0)
+var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 0, views: 0)
 var posts = [post1, post2, post3, post4]
 
 

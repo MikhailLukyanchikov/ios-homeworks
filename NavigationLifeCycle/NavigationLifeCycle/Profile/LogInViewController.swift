@@ -182,7 +182,7 @@ class LogInViewController: UIViewController {
         self.messageLabel.text = ""
         messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
-        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
+     /*  guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
         else {
             if self.textFieldLogin.text!.isEmpty {
                 self.messageLabel.text = "Login is Empty"
@@ -222,7 +222,7 @@ class LogInViewController: UIViewController {
                 messageLabel.isHidden = false
             }
             return
-        }
+        }  */
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }

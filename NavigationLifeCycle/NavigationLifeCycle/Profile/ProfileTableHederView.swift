@@ -34,8 +34,11 @@ class ProfileTableHederView: UITableViewHeaderFooterView {
         }
     }
 extension ProfileTableHederView: ProfileHeaderViewProtocol {
-    func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void) {
+
+    
+    func didTapStatusButton(textFieldIsVisible: Bool, count: Int, completion: @escaping () -> Void) {
         UIView.animate(withDuration: 0.3, delay: 0.3) {
+            print ("Count is \(count)")
         } completion: { _ in
             completion()
         }

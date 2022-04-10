@@ -7,12 +7,31 @@
 
 import UIKit
 
+protocol PostTableViewProtocol : AnyObject {
+    func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void)
+}
+
 class PostTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     let screenSize = UIScreen.main.bounds.width
     private let tapGestureRecogniaer = UITapGestureRecognizer()
+    private let tapViewGestureRecogniaer = UITapGestureRecognizer()
+    weak var delegate : PostTableViewProtocol?
+    var LikeCount = 0
+    var ViewCount = 0
+    
+    lazy var textm : UITextView = {
+        let text = UITextView()
+        text.text = posts[1].description
+        text.textColor = .black
 
-        
+        text.textAlignment = .center
+      //  text.backgroundColor = .green
+        text.translatesAutoresizingMaskIntoConstraints = false
+        text.isHidden = false
+        return text
+    }()
+    
     private lazy var authorLabel : UILabel = {
         let author = UILabel()
         author.font = .systemFont(ofSize: 20, weight: .bold)
@@ -37,6 +56,8 @@ class PostTableViewCell: UITableViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .black
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapViewGestureRecogniaer)
         return imageView
     }()
     private lazy var likes : UILabel = {
@@ -49,6 +70,7 @@ class PostTableViewCell: UITableViewCell {
         likes.isUserInteractionEnabled = true
         return likes
     }()
+
     private lazy var views : UILabel = {
         let views = UILabel()
         views.backgroundColor = .white
@@ -66,8 +88,11 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(views)
         contentView.addSubview(authorLabel)
         contentView.addSubview(descriptionLabel)
+        contentView.addSubview(textm)
         setConstraints()
         self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+
     }
     
     required init?(coder: NSCoder) {
@@ -78,8 +103,8 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.text = author
         myImage.image = imageName
         descriptionLabel.text = description
-        self.likes.text = "Likes:" + String(likes)
-        self.views.text = "Views:" + String(views)
+        self.likes.text = "Likes:" + String(self.LikeCount)
+        self.views.text = "Views:" + String(self.ViewCount)
     }
     override func prepareForReuse() {
         authorLabel.text = nil
@@ -90,34 +115,28 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
-       guard self.tapGestureRecogniaer === gestureRecogniser else { return }
-        print("like")
-        post1.likes += 1
-        print(post1.likes)
-        self.likes.text = "Likes" + String(post1.likes)
-
-//        let point = gestureRecogniser.location(in: contentView)
-//        if let indexPath = collectionView.indexPathForItem(at: point)
-
-        //if contentView.index(ofAccessibilityElement: point) != nil {print ("Like")}
-        
-//        if point == contentView.viewWithTag(5) {
-//
-//        }
-     //   if let indexPath = contentView.indexPathForItem(at: point) {
-//                let foto = self.collection[indexPath.row]
-//                let view = UIImageView(image: foto)
-//                UIView.animate(withDuration: 2.5) {
-//                    self.view.addSubview(view)
-//                    view.frame = CGRect(x: 0, y: 200, width: Int(self.sizeX), height: Int(self.sizeX))
-//                    self.contentView.alpha = 0.2
-//                } completion: {_ in
-//                    view.isHidden = true
-//                    self.contentView.alpha = 1
-//                }
-       // }
+    //   guard
+//        self.tapGestureRecogniaer === gestureRecogniser //else { //return}
+//       self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
+//            self?.LikeCount += 1
+//            self?.likes.text = "Likes:" + String((self?.LikeCount)!)
+//            }
+        guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
+        self.delegate?.didTapLikeButton(indexPath: self.ViewCount){ [weak self] in
+         print("HoHo")
+            self?.textm.isHidden = false
+             self?.ViewCount += 1
+             self?.views.text = "Views:" + String((self?.ViewCount)!)
+                 UIView.animate(withDuration: 2.5) {
+                     self?.textm.isHidden = false
+                    // view.frame = CGRect(x: 0, y: 200, width: Int(self.sizeX), height: Int(self.sizeX))
+                //     self?.contentView.alpha = 0.2
+                 } completion: {_ in
+                     self?.textm.isHidden = true
+                //     self?.contentView.alpha = 1
+                 }
+             }
     }
-    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -147,6 +166,16 @@ class PostTableViewCell: UITableViewCell {
                                      self.views.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
                                      self.views.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,constant: -40),
                                      self.views.heightAnchor.constraint(equalToConstant: 20),
-                                     self.views.widthAnchor.constraint(equalToConstant: 80)])
+                                     self.views.widthAnchor.constraint(equalToConstant: 80),
+        
+                                     self.textm.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                     self.textm.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+                                     self.textm.heightAnchor.constraint(equalToConstant: screenSize/3),
+                                     self.textm.widthAnchor.constraint(equalToConstant: screenSize)
+        ])
     }
 }
+
+    
+    
+
