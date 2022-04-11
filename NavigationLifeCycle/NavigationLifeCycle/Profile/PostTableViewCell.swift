@@ -26,12 +26,9 @@ class PostTableViewCell: UITableViewCell {
     
     lazy var textm : UITextView = {
         let text = UITextView()
-      //  text.text = posts[1].description
         text.textColor = .black
         text.font = .monospacedDigitSystemFont(ofSize: 25, weight: .bold)
-
         text.textAlignment = .center
-      //  text.backgroundColor = .green
         text.translatesAutoresizingMaskIntoConstraints = false
         text.isHidden = true
         return text

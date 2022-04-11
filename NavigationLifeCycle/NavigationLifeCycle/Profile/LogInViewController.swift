@@ -105,7 +105,6 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   //     setupNavBar()
         title = "Profile"
         self.view.backgroundColor = .white
         drawSelf()
@@ -166,13 +165,7 @@ class LogInViewController: UIViewController {
                                      self.statusButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 16),
                                      self.statusButton.leadingAnchor.constraint(equalTo: self.labelStackView.leadingAnchor),
                                      self.statusButton.heightAnchor.constraint(equalToConstant: 50),
-                                     self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor),
-                                     
-
-        
-        ])
-            
-        
+                                     self.statusButton.trailingAnchor.constraint(equalTo: self.labelStackView.trailingAnchor) ])
     }
     @objc func buttonClicked() {
         self.textFieldPass.layer.borderColor = UIColor.lightGray.cgColor
@@ -182,7 +175,7 @@ class LogInViewController: UIViewController {
         self.messageLabel.text = ""
         messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
-     /*  guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
+        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
         else {
             if self.textFieldLogin.text!.isEmpty {
                 self.messageLabel.text = "Login is Empty"
@@ -222,7 +215,7 @@ class LogInViewController: UIViewController {
                 messageLabel.isHidden = false
             }
             return
-        }  */
+        }
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }
@@ -236,7 +229,6 @@ class LogInViewController: UIViewController {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
-
 }
 extension UIColor {
   convenience init(_ hex: String, alpha: CGFloat = 1.0) {

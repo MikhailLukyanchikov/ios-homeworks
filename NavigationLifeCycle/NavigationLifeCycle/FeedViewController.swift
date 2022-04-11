@@ -54,16 +54,10 @@ import UIKit
     }
     @objc func buttonClicked() {
         let postViewController = PostViewController()
-        navigationController?.pushViewController(postViewController, animated: true)
+        navigationController?.pushViewController(postViewController, animated: false)
     }
     @objc func buttonClicked2() {
         let postViewController = PostViewController()
-        navigationController?.pushViewController(postViewController, animated: true)
+        navigationController?.pushViewController(postViewController, animated: false)
     }
  }
-
-
-
-//struct Post {
-//    let title: String = "Post"
-//}

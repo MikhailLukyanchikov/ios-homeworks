@@ -14,7 +14,6 @@ protocol ProfileHeaderViewProtocol : AnyObject {
 final class ProfileHeaderView: UIView {
     var imageViewAspectRatio : NSLayoutConstraint?
     var isShow = true
-    private var buttonTopConstraint : NSLayoutConstraint?
     weak var delegate : ProfileHeaderViewProtocol?
     private var currentStatus : String = ""
     
@@ -100,8 +99,7 @@ final class ProfileHeaderView: UIView {
         textField.textAlignment = .center
         return textField
     }()
-
-    
+ 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.drawSelf()
@@ -122,10 +120,7 @@ final class ProfileHeaderView: UIView {
         self.addSubview(textField)
         self.backgroundColor = .lightGray
 
-
         self.imageViewAspectRatio = self.avatarImageView.heightAnchor.constraint(equalTo: self.avatarImageView.widthAnchor, multiplier: 1.0)
-        self.buttonTopConstraint = self.statusButton.topAnchor.constraint(equalTo: self.infoStackView.bottomAnchor, constant: 20)
-        self.buttonTopConstraint?.priority = UILayoutPriority(rawValue: 999)
 
         NSLayoutConstraint.activate([self.infoStackView.topAnchor.constraint(equalTo: self.topAnchor),
                                      self.infoStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
