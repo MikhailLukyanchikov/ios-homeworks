@@ -105,6 +105,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         
         cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: 0, views: 0)
         cell.delegate = self
+        cell.viewDelegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -139,6 +140,15 @@ extension ProfileViewController : PostTableViewProtocol {
         }
     }
 }
+extension ProfileViewController : PostTableViewImageProtocol {
+    func didTapViewButton(indexPath: Int, completion: @escaping () -> Void) {
+        UIView.animate(withDuration: 1) {
+        } completion: { _ in
+            completion()
+        }
+    }
+}
+
 struct Post  {
     let author : String
     let description : String

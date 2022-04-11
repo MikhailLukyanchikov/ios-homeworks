@@ -10,25 +10,30 @@ import UIKit
 protocol PostTableViewProtocol : AnyObject {
     func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void)
 }
-
+protocol PostTableViewImageProtocol : AnyObject {
+    func didTapViewButton(indexPath: Int, completion: @escaping () -> Void)
+}
 class PostTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     let screenSize = UIScreen.main.bounds.width
     private let tapGestureRecogniaer = UITapGestureRecognizer()
     private let tapViewGestureRecogniaer = UITapGestureRecognizer()
     weak var delegate : PostTableViewProtocol?
+    weak var viewDelegate : PostTableViewImageProtocol?
     var LikeCount = 0
     var ViewCount = 0
+    var isTapped = false
     
     lazy var textm : UITextView = {
         let text = UITextView()
-        text.text = posts[1].description
+      //  text.text = posts[1].description
         text.textColor = .black
+        text.font = .monospacedDigitSystemFont(ofSize: 25, weight: .bold)
 
         text.textAlignment = .center
       //  text.backgroundColor = .green
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.isHidden = false
+        text.isHidden = true
         return text
     }()
     
@@ -91,7 +96,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(textm)
         setConstraints()
         self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
-        self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapViewGesture(_:)))
 
     }
     
@@ -115,29 +120,32 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
-    //   guard
-//        self.tapGestureRecogniaer === gestureRecogniser //else { //return}
-//       self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
-//            self?.LikeCount += 1
-//            self?.likes.text = "Likes:" + String((self?.LikeCount)!)
-//            }
+       guard self.tapGestureRecogniaer === gestureRecogniser else { return}
+       self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
+            self?.LikeCount += 1
+            self?.likes.text = "Likes:" + String((self?.LikeCount)!)
+            }
+       
+    }
+    @objc func habdleTapViewGesture(_ gestureRecogniser: UITapGestureRecognizer) {
         guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
-        self.delegate?.didTapLikeButton(indexPath: self.ViewCount){ [weak self] in
-         print("HoHo")
-            self?.textm.isHidden = false
-             self?.ViewCount += 1
-             self?.views.text = "Views:" + String((self?.ViewCount)!)
-                 UIView.animate(withDuration: 2.5) {
-                     self?.textm.isHidden = false
-                    // view.frame = CGRect(x: 0, y: 200, width: Int(self.sizeX), height: Int(self.sizeX))
-                //     self?.contentView.alpha = 0.2
+        self.viewDelegate?.didTapViewButton(indexPath: self.ViewCount){ [weak self] in
+         self?.isTapped.toggle()
+            if self!.isTapped {
+                self?.ViewCount += 1
+                self?.views.text = "Views:" + String((self?.ViewCount)!)
+                self?.textm.text = self?.descriptionLabel.text
+                self?.textm.isHidden = false
+            } else {
+                self?.textm.isHidden = true
+            }
+            
+            UIView.animate(withDuration: 1){
                  } completion: {_ in
-                     self?.textm.isHidden = true
-                //     self?.contentView.alpha = 1
                  }
              }
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
     }
@@ -169,10 +177,9 @@ class PostTableViewCell: UITableViewCell {
                                      self.views.widthAnchor.constraint(equalToConstant: 80),
         
                                      self.textm.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.textm.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-                                     self.textm.heightAnchor.constraint(equalToConstant: screenSize/3),
-                                     self.textm.widthAnchor.constraint(equalToConstant: screenSize)
-        ])
+                                     self.textm.bottomAnchor.constraint(equalTo: self.myImage.bottomAnchor),
+                                     self.textm.heightAnchor.constraint(equalToConstant: screenSize/2),
+                                     self.textm.widthAnchor.constraint(equalToConstant: screenSize)])
     }
 }
 

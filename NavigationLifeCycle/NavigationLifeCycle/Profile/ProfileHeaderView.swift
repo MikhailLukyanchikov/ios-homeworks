@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ProfileHeaderViewProtocol : AnyObject {
-    func didTapStatusButton(textFieldIsVisible: Bool, count : Int, completion: @escaping () -> Void)
+    func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
 
 }
 final class ProfileHeaderView: UIView {
@@ -16,8 +16,6 @@ final class ProfileHeaderView: UIView {
     var isShow = true
     private var buttonTopConstraint : NSLayoutConstraint?
     weak var delegate : ProfileHeaderViewProtocol?
-    var count = 0
-    
     private var currentStatus : String = ""
     
      var avatarImageView : UIImageView = {
@@ -156,8 +154,7 @@ final class ProfileHeaderView: UIView {
                 statusButton.setTitle("Show Status", for: .normal)
                 currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
             }
-        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isEnabled, count: self.count) { [weak self] in
-            self?.count += 1
+        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isEnabled) { [weak self] in
             self?.textField.isEnabled.toggle()
 
         }
