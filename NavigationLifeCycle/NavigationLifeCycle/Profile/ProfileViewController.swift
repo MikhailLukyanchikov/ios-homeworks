@@ -6,8 +6,6 @@
 //
 import UIKit
 
-
-
 class ProfileViewController : UIViewController {
     
     let sizeX = UIScreen.main.bounds.width
@@ -103,7 +101,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
       guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
     else { return UITableViewCell()}
         
-        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes: 0, views: 0)
+        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description)
         cell.delegate = self
         cell.viewDelegate = self
         return cell
@@ -153,14 +151,14 @@ struct Post  {
     let author : String
     let description : String
     let image : String
-    var likes : Int
-    var views : Int
+    lazy var likes : Int = 0
+    lazy var views : Int = 0
 }
 var images : [UIImage?] = [UIImage(named: "sport1"), UIImage(named: "Space1"), UIImage(named: "war2"), UIImage(named: "science1")]
-var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 0, views: 0)
-var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 0, views: 0)
-var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 0, views: 0)
-var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 0, views: 0)
+var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос")
+var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport")
+var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science")
+var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War")
 var posts = [post1, post2, post3, post4]
 
 

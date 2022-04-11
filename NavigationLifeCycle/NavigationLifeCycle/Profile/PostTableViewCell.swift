@@ -24,11 +24,14 @@ class PostTableViewCell: UITableViewCell {
     var ViewCount = 0
     var isTapped = false
     
-    lazy var textm : UITextView = {
+    lazy var textDescription : UITextView = {
         let text = UITextView()
         text.textColor = .black
+        text.backgroundColor = .lightGray
         text.font = .monospacedDigitSystemFont(ofSize: 25, weight: .bold)
         text.textAlignment = .center
+        text.layer.borderWidth = 2
+        text.layer.borderColor = .init(genericCMYKCyan: 0, magenta: 0, yellow: 0, black: 1, alpha: 1)
         text.translatesAutoresizingMaskIntoConstraints = false
         text.isHidden = true
         return text
@@ -90,7 +93,7 @@ class PostTableViewCell: UITableViewCell {
         contentView.addSubview(views)
         contentView.addSubview(authorLabel)
         contentView.addSubview(descriptionLabel)
-        contentView.addSubview(textm)
+        contentView.addSubview(textDescription)
         setConstraints()
         self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
         self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapViewGesture(_:)))
@@ -101,7 +104,7 @@ class PostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(author: String, imageName : UIImage, description : String, likes : Int, views : Int) {
+    public func configure(author: String, imageName : UIImage, description : String) {
         authorLabel.text = author
         myImage.image = imageName
         descriptionLabel.text = description
@@ -131,10 +134,10 @@ class PostTableViewCell: UITableViewCell {
             if self!.isTapped {
                 self?.ViewCount += 1
                 self?.views.text = "Views:" + String((self?.ViewCount)!)
-                self?.textm.text = self?.descriptionLabel.text
-                self?.textm.isHidden = false
+                self?.textDescription.text = self?.descriptionLabel.text
+                self?.textDescription.isHidden = false
             } else {
-                self?.textm.isHidden = true
+                self?.textDescription.isHidden = true
             }
             
             UIView.animate(withDuration: 1){
@@ -173,10 +176,10 @@ class PostTableViewCell: UITableViewCell {
                                      self.views.heightAnchor.constraint(equalToConstant: 20),
                                      self.views.widthAnchor.constraint(equalToConstant: 80),
         
-                                     self.textm.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.textm.bottomAnchor.constraint(equalTo: self.myImage.bottomAnchor),
-                                     self.textm.heightAnchor.constraint(equalToConstant: screenSize/2),
-                                     self.textm.widthAnchor.constraint(equalToConstant: screenSize)])
+                                     self.textDescription.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                     self.textDescription.bottomAnchor.constraint(equalTo: self.myImage.bottomAnchor,constant: 40),
+                                     self.textDescription.heightAnchor.constraint(equalToConstant: screenSize/2),
+                                     self.textDescription.widthAnchor.constraint(equalToConstant: screenSize)])
     }
 }
 

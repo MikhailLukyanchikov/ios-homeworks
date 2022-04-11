@@ -46,9 +46,9 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarBatton
         drawSelf()
     }
-    override func viewDidLayoutSubviews() {
-        super .viewDidLayoutSubviews()
-    }
+//    override func viewDidLayoutSubviews() {
+//        super .viewDidLayoutSubviews()
+//    }
     func drawSelf() {
         NSLayoutConstraint.activate([self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16),
                                      self.imageView.widthAnchor.constraint(equalToConstant: 150),
@@ -66,6 +66,6 @@ class PostViewController: UIViewController {
     }
     @objc func buttonInfoClicked() {
         let infoViewController = InfoViewController()
-        navigationController?.pushViewController(infoViewController, animated: true)
+        navigationController?.pushViewController(infoViewController, animated: false)
     }
 }

@@ -14,10 +14,6 @@ class InfoViewController: UIViewController {
         button.backgroundColor = .blue
         button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 90).isActive = true
-        button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -90).isActive = true
-        button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
         button.setTitle("Some Alert", for: .normal)
         button.addTarget(self, action: #selector(alertTapped), for: .touchUpInside)
         return button
@@ -27,6 +23,10 @@ class InfoViewController: UIViewController {
         self.view.backgroundColor = .yellow
         title = "InfoView"
         self.view.addSubview(button)
+        NSLayoutConstraint.activate([button.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 90),
+                                     button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -90),
+                                     button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+                                     button.heightAnchor.constraint(equalToConstant: 40)])
     }
     @objc func alertTapped() {
         let alert = UIAlertController(title: "Ready", message: "Some Message", preferredStyle: .alert)
