@@ -14,11 +14,11 @@ import UIKit
         view.backgroundColor = .brown
         
         let imageView = UIImageView(image: UIImage(named: "image")!)
-        imageView.frame = CGRect(x: 10, y: 100, width: 200, height: 200)
+        imageView.frame = CGRect(x: 16, y: 116, width: 150, height: 150)
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 50
+        imageView.layer.cornerRadius = 75
         view.addSubview(imageView)
-        let myField = UITextField(frame: CGRect(x: 250, y: 200, width: 120, height: 30))
+        let myField = UITextField(frame: CGRect(x: 220, y: 136, width: 120, height: 30))
         myField.backgroundColor = .green
         myField.layer.cornerRadius = 20
         myField.textAlignment = .center

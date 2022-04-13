@@ -8,6 +8,12 @@
 import UIKit
 
  class FeedViewController: UIViewController {
+    
+    struct Post {
+        let title: String
+    }
+    let post = Post(title: "Post")
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Feed"
@@ -30,6 +36,4 @@ import UIKit
         navigationController?.pushViewController(postViewController, animated: true)
     }
  }
-struct Post {
-    let title: String = "Post"
-}
+
