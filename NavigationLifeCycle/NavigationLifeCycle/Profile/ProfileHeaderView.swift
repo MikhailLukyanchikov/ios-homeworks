@@ -9,13 +9,14 @@ import UIKit
 
 protocol ProfileHeaderViewProtocol : AnyObject {
     func didTapStatusButton(textFieldIsVisible: Bool, completion: @escaping () -> Void)
-
 }
 final class ProfileHeaderView: UIView {
     var imageViewAspectRatio : NSLayoutConstraint?
     var isShow = true
     weak var delegate : ProfileHeaderViewProtocol?
+    private let tapGestureRecogniaer = UITapGestureRecognizer()
     private var currentStatus : String = ""
+    private var isTapped = false
     
      var avatarImageView : UIImageView = {
         let profileImage = UIImage(named: "image")
@@ -103,6 +104,8 @@ final class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.drawSelf()
+        self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
+        self.avatarImageView.addGestureRecognizer(tapGestureRecogniaer)
     }
     
     required init?(coder: NSCoder) {
@@ -138,6 +141,14 @@ final class ProfileHeaderView: UIView {
                                      self.textField.heightAnchor.constraint(equalToConstant: 34),
                                         
                                     imageViewAspectRatio ].compactMap({$0}))
+    }
+    
+    @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
+       guard self.tapGestureRecogniaer === gestureRecogniser else { return}
+        self.delegate?.didTapStatusButton(textFieldIsVisible: isTapped) { [weak self] in
+            self?.isTapped.toggle()
+            }
+       
     }
     @objc private func didTapStatusButton() {
         isShow.toggle()

@@ -4,7 +4,6 @@
 //
 //  Created by MIKHAIL on 03.03.2022.
 //
-
 import UIKit
 
 class InfoViewController: UIViewController {

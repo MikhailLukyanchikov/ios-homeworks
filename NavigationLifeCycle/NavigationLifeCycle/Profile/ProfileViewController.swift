@@ -15,6 +15,9 @@ class ProfileViewController : UIViewController {
     let arrowSymbol = "\u{2192}"
     private let panGestureRecognizer = UIPanGestureRecognizer()
     private let tapGestureRecogniaer = UITapGestureRecognizer()
+    private let tapLabelGestureRecogniaer = UITapGestureRecognizer()
+
+    private lazy var likesCount : Int = 0
 
     lazy var label : UILabel = {
         let secondButton = UILabel()
@@ -23,6 +26,8 @@ class ProfileViewController : UIViewController {
         secondButton.tag = 5
         secondButton.isHidden = true
         secondButton.alpha = 0
+        secondButton.isUserInteractionEnabled = true
+        secondButton.addGestureRecognizer(tapLabelGestureRecogniaer)
         return secondButton
     }()
     lazy var myView : UIImageView = {
@@ -31,6 +36,8 @@ class ProfileViewController : UIViewController {
         view.frame = .init(x: 0, y: 200, width: sizeX, height: sizeY-400)
         view.isHidden = true
         view.alpha = 0
+        view.isUserInteractionEnabled = true
+        view.addGestureRecognizer(tapLabelGestureRecogniaer)
         return view
     }()
     let tableview: UITableView = {
@@ -46,10 +53,27 @@ class ProfileViewController : UIViewController {
         tableview.dataSource = self
         tableview.delegate = self
         view.addSubview(tableview)
+        self.tapLabelGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapLabelGesture(_:)))
     }
     override func viewDidLayoutSubviews() {
         super .viewDidLayoutSubviews()
         tableview.frame = view.bounds
+    }
+    @objc func habdleTapLabelGesture(_ gestureRecogniser: UITapGestureRecognizer) {
+        guard self.tapLabelGestureRecogniaer === gestureRecogniser else { return }
+        self.isExpanded.toggle()
+        UIView.animate(withDuration: 0.5) {
+            if !self.isExpanded {
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = 1
+                self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = 75
+                self.myView.alpha = 0
+                self.tableview.alpha = 1
+                self.tableview.willRemoveSubview(self.myView)
+                self.label.alpha = 0
+                self.label.isHidden = true
+            }
+        } completion: {_ in
+        }
     }
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
         guard self.tapGestureRecogniaer === gestureRecogniser else { return }
@@ -68,17 +92,8 @@ class ProfileViewController : UIViewController {
                     self.label.frame = CGRect(x: self.sizeX-20, y: 10, width: 15, height: 15)
                     self.label.alpha = 1
                     self.label.isHidden = false
-
                 } completion: {_ in
                 }
-            } else {
-                self.tableview.viewWithTag(2)?.viewWithTag(1)?.alpha = 1
-                self.tableview.viewWithTag(2)?.viewWithTag(1)?.layer.cornerRadius = 75
-                self.myView.alpha = 0
-                self.tableview.alpha = 1
-                self.tableview.willRemoveSubview(self.myView)
-                self.label.alpha = 0
-                self.label.isHidden = true
             }
         } completion: {_ in
         }
@@ -100,8 +115,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         }
       guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
     else { return UITableViewCell()}
-        
-        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description)
+        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, likes : likesCount, views : posts[indexPath.row-1].views )
         cell.delegate = self
         cell.viewDelegate = self
         return cell
@@ -117,7 +131,6 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
                    "sectionHeader") as! ProfileTableHederView
         self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
         view.viewWithTag(1)?.addGestureRecognizer(tapGestureRecogniaer)
-        view.addGestureRecognizer(tapGestureRecogniaer)
        return view
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -132,6 +145,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
 }
 extension ProfileViewController : PostTableViewProtocol {
     func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void) {
+        likesCount = indexPath
         UIView.animate(withDuration: 0.3, delay: 0.3) {
         } completion: { _ in
             completion()
@@ -146,19 +160,18 @@ extension ProfileViewController : PostTableViewImageProtocol {
         }
     }
 }
-
 struct Post  {
     let author : String
     let description : String
     let image : String
-    lazy var likes : Int = 0
-    lazy var views : Int = 0
+    var likes : Int
+    var views : Int
 }
 var images : [UIImage?] = [UIImage(named: "sport1"), UIImage(named: "Space1"), UIImage(named: "war2"), UIImage(named: "science1")]
-var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос")
-var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport")
-var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science")
-var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War")
+var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон вышел в открытый космос", image: "Космос", likes: 0, views: 0)
+var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 0, views: 0)
+var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 0, views: 0)
+var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 0, views: 0)
 var posts = [post1, post2, post3, post4]
 
 

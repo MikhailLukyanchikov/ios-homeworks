@@ -12,7 +12,6 @@ class LogInViewController: UIViewController {
         scrollView.autoresizingMask = [.flexibleHeight]
         return scrollView
     }()
-    
     private lazy var iconImage : UIImageView = {
         let image = UIImage(named: "logo")
         let nameLabel = UIImageView(image: image)
@@ -20,7 +19,6 @@ class LogInViewController: UIViewController {
         nameLabel.layer.cornerRadius = 15
         return nameLabel
     }()
-    
     private lazy var statusButton : UIButton = {
         var statusButton = UIButton()
         statusButton.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +29,6 @@ class LogInViewController: UIViewController {
         statusButton.backgroundImage(for: .application)
         return statusButton
     }()
-    
     private lazy var textFieldLogin: UITextField = {
         let textField = UITextField()
         textField.isHidden = false
@@ -54,7 +51,6 @@ class LogInViewController: UIViewController {
         textField.tintColor = customColor
         return textField
     }()
-    
     private lazy var textFieldPass: UITextField = {
         let textField = UITextField()
         textField.isHidden = false
@@ -78,7 +74,6 @@ class LogInViewController: UIViewController {
         textField.tintColor = customColor
         return textField
     }()
-    
     private lazy var labelStackView : UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -87,7 +82,6 @@ class LogInViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
-    
     private lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.backgroundColor = .green
@@ -122,7 +116,6 @@ class LogInViewController: UIViewController {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(kbdShow), name:UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(kbdHide), name:UIResponder.keyboardWillHideNotification, object: nil)
-        
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -130,7 +123,6 @@ class LogInViewController: UIViewController {
         nc.removeObserver(self, name:UIResponder.keyboardWillShowNotification, object: nil)
         nc.removeObserver(self, name:UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
     private func drawSelf() {
         self.view.addSubview(self.scrollView)
         self.scrollView.addSubview(messageLabel)
@@ -175,47 +167,6 @@ class LogInViewController: UIViewController {
         self.messageLabel.text = ""
         messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
-        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
-        else {
-            if self.textFieldLogin.text!.isEmpty {
-                self.messageLabel.text = "Login is Empty"
-                self.scrollView.addSubview(messageLabel)
-                messageLabel.isHidden = false
-                self.textFieldLogin.layer.borderWidth = 3
-                self.textFieldLogin.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-            }
-            if self.textFieldPass.text!.isEmpty {
-                self.messageLabel.text = "Password is Empty"
-                self.textFieldPass.layer.borderWidth = 3
-                self.textFieldPass.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-                messageLabel.isHidden = false
-            }
-            return
-        }
-        if self.textFieldPass.text!.count < 6 {
-            self.messageLabel.text = "Password too easy, minimum count is 6 symbol"
-            messageLabel.isHidden = false
-            return
-        }
-        guard self.textFieldLogin.text == self.defaultLogin && self.textFieldPass.text == self.defaultPass else {
-            if self.textFieldLogin.text != self.defaultLogin {
-                let alert = UIAlertController(title: "Error", message: "Login Incorrect", preferredStyle: .alert)
-                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
-                present(alert, animated: true, completion: nil)
-                alert.addAction(buttonAllertYes)
-                self.messageLabel.text = "Login incorrect, default is 'admin'"
-                messageLabel.isHidden = false
-            }
-            if self.textFieldPass.text != self.defaultPass {
-                let alert = UIAlertController(title: "Error", message: "Password Incorrect", preferredStyle: .alert)
-                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
-                present(alert, animated: true, completion: nil)
-                alert.addAction(buttonAllertYes)
-                self.messageLabel.text = "Password incorrect, default is '12345678'"
-                messageLabel.isHidden = false
-            }
-            return
-        }
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }

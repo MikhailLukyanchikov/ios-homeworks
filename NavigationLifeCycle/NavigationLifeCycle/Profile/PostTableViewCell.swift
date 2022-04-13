@@ -99,17 +99,15 @@ class PostTableViewCell: UITableViewCell {
         self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapViewGesture(_:)))
 
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    public func configure(author: String, imageName : UIImage, description : String) {
+    public func configure(author: String, imageName : UIImage, description : String, likes : Int, views : Int) {
         authorLabel.text = author
         myImage.image = imageName
         descriptionLabel.text = description
-        self.likes.text = "Likes:" + String(self.LikeCount)
-        self.views.text = "Views:" + String(self.ViewCount)
+        self.likes.text = "Likes:" + String(likes)      //String(self.LikeCount)
+        self.views.text = "Views:" + String(views)      //String(self.ViewCount)
     }
     override func prepareForReuse() {
         authorLabel.text = nil
@@ -125,7 +123,6 @@ class PostTableViewCell: UITableViewCell {
             self?.LikeCount += 1
             self?.likes.text = "Likes:" + String((self?.LikeCount)!)
             }
-       
     }
     @objc func habdleTapViewGesture(_ gestureRecogniser: UITapGestureRecognizer) {
         guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
@@ -139,17 +136,14 @@ class PostTableViewCell: UITableViewCell {
             } else {
                 self?.textDescription.isHidden = true
             }
-            
             UIView.animate(withDuration: 1){
                  } completion: {_ in
                  }
              }
     }
-
     override func layoutSubviews() {
         super.layoutSubviews()
     }
-    
     func setConstraints() {
         NSLayoutConstraint.activate([self.authorLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
                                      self.authorLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
