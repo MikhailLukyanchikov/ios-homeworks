@@ -46,9 +46,6 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightBarBatton
         drawSelf()
     }
-//    override func viewDidLayoutSubviews() {
-//        super .viewDidLayoutSubviews()
-//    }
     func drawSelf() {
         NSLayoutConstraint.activate([self.imageView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 16),
                                      self.imageView.widthAnchor.constraint(equalToConstant: 150),

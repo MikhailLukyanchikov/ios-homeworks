@@ -108,19 +108,19 @@ class PostTableViewCell: UITableViewCell {
         authorLabel.text = author
         myImage.image = imageName
         descriptionLabel.text = description
-        self.likes.text = "Likes:" + String(self.LikeCount)
-        self.views.text = "Views:" + String(self.ViewCount)
+        likes.text = "Likes:" + String(self.LikeCount)
+        views.text = "Views:" + String(self.ViewCount)
     }
     override func prepareForReuse() {
         authorLabel.text = nil
         myImage.image = nil
         descriptionLabel.text = nil
-        self.likes.text = nil
-        self.views.text = nil
+        likes.text = nil
+        views.text = nil
     }
     
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
-       guard self.tapGestureRecogniaer === gestureRecogniser else { return}
+  //     guard self.tapGestureRecogniaer === gestureRecogniser else { return}
        self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
             self?.LikeCount += 1
             self?.likes.text = "Likes:" + String((self?.LikeCount)!)
@@ -128,7 +128,7 @@ class PostTableViewCell: UITableViewCell {
        
     }
     @objc func habdleTapViewGesture(_ gestureRecogniser: UITapGestureRecognizer) {
-        guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
+ //       guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
         self.viewDelegate?.didTapViewButton(indexPath: self.ViewCount){ [weak self] in
          self?.isTapped.toggle()
             if self!.isTapped {
@@ -146,9 +146,9 @@ class PostTableViewCell: UITableViewCell {
              }
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//    }
     
     func setConstraints() {
         NSLayoutConstraint.activate([self.authorLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
