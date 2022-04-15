@@ -56,10 +56,7 @@ class ProfileViewController : UIViewController {
         tableview.frame = view.bounds
         self.tapLabelGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapLabelGesture(_:)))
     }
-//    override func viewDidLayoutSubviews() {
-//        super .viewDidLayoutSubviews()
-//        tableview.frame = view.bounds
-//    }
+
     @objc func habdleTapLabelGesture(_ gestureRecogniser: UITapGestureRecognizer) {
         guard self.tapLabelGestureRecogniaer === gestureRecogniser else { return }
         self.isExpanded.toggle()
@@ -181,7 +178,7 @@ var post2 = Post(author: "https://www.comnews.ru/", description: "МегаФон
 var post1 = Post(author: "www.championat.com", description: "От бумеров до зумеров: какой спорт популярен среди разных поколений?", image: "Sport", likes: 0, views: 0)
 var post4 = Post(author: "https://work-way.com/", description: "Наука — враг случайностей", image: "Science", likes: 0, views: 0)
 var post3 = Post(author: "https://www.forbes.ru/", description: "«Зажмуриться и надеяться, что это чудовище исчезнет»: как мы переживаем страх войны", image: "War", likes: 0, views: 0)
-var posts = [post1, post2, post3, post4, post2]
+var posts = [post1, post2, post3, post4]
 
 
 

@@ -36,8 +36,8 @@ class PostTableViewCell: UITableViewCell {
         text.isHidden = true
         return text
     }()
-    
-    private lazy var authorLabel : UILabel = {
+
+private lazy var authorLabel : UILabel = {
         let author = UILabel()
         author.font = .systemFont(ofSize: 20, weight: .bold)
         author.backgroundColor = .white
@@ -55,7 +55,7 @@ class PostTableViewCell: UITableViewCell {
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
-    private lazy var myImage: UIImageView = {
+    private lazy var mainImage: UIImageView = {
         let image = UIImage(named: "image")
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
@@ -65,7 +65,7 @@ class PostTableViewCell: UITableViewCell {
         imageView.addGestureRecognizer(tapViewGestureRecogniaer)
         return imageView
     }()
-    private lazy var likes : UILabel = {
+    private lazy var likesCountLabel : UILabel = {
         let likes = UILabel()
         likes.backgroundColor = .white
         likes.tintColor = .black
@@ -76,7 +76,7 @@ class PostTableViewCell: UITableViewCell {
         return likes
     }()
 
-    private lazy var views : UILabel = {
+    private lazy var viewsCountLabel : UILabel = {
         let views = UILabel()
         views.backgroundColor = .white
         views.font = .systemFont(ofSize: 14, weight: .medium)
@@ -84,20 +84,28 @@ class PostTableViewCell: UITableViewCell {
         views.translatesAutoresizingMaskIntoConstraints = false
         return views
     }()
+    private lazy var labelStackView : UIStackView = {
+         let stackView = UIStackView()
+         stackView.axis = .vertical
+         stackView.distribution = .fillProportionally
+         stackView.spacing = 10
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         return stackView
+     }()
 
     override init(style : UITableViewCell.CellStyle, reuseIdentifier : String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .white
-        contentView.addSubview(myImage)
-        contentView.addSubview(likes)
-        contentView.addSubview(views)
-        contentView.addSubview(authorLabel)
-        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(labelStackView)
+        labelStackView.addArrangedSubview(authorLabel)
+        labelStackView.addArrangedSubview(mainImage)
+        labelStackView.addArrangedSubview(descriptionLabel)
+        contentView.addSubview(likesCountLabel)
+        contentView.addSubview(viewsCountLabel)
         contentView.addSubview(textDescription)
         setConstraints()
         self.tapGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapGesture(_:)))
         self.tapViewGestureRecogniaer.addTarget(self, action: #selector(self.habdleTapViewGesture(_:)))
-
     }
     
     required init?(coder: NSCoder) {
@@ -106,24 +114,24 @@ class PostTableViewCell: UITableViewCell {
     
     public func configure(author: String, imageName : UIImage, description : String) {
         authorLabel.text = author
-        myImage.image = imageName
+        mainImage.image = imageName
         descriptionLabel.text = description
-        likes.text = "Likes:" + String(self.LikeCount)
-        views.text = "Views:" + String(self.ViewCount)
+        likesCountLabel.text = "Likes:" + String(self.LikeCount)
+        viewsCountLabel.text = "Views:" + String(self.ViewCount)
     }
     override func prepareForReuse() {
         authorLabel.text = nil
-        myImage.image = nil
+        mainImage.image = nil
         descriptionLabel.text = nil
-        likes.text = nil
-        views.text = nil
+        likesCountLabel.text = nil
+        viewsCountLabel.text = nil
     }
     
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
   //     guard self.tapGestureRecogniaer === gestureRecogniser else { return}
        self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
             self?.LikeCount += 1
-            self?.likes.text = "Likes:" + String((self?.LikeCount)!)
+            self?.likesCountLabel.text = "Likes:" + String((self?.LikeCount)!)
             }
        
     }
@@ -133,7 +141,7 @@ class PostTableViewCell: UITableViewCell {
          self?.isTapped.toggle()
             if self!.isTapped {
                 self?.ViewCount += 1
-                self?.views.text = "Views:" + String((self?.ViewCount)!)
+                self?.viewsCountLabel.text = "Views:" + String((self?.ViewCount)!)
                 self?.textDescription.text = self?.descriptionLabel.text
                 self?.textDescription.isHidden = false
             } else {
@@ -146,42 +154,30 @@ class PostTableViewCell: UITableViewCell {
              }
     }
 
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//    }
-    
     func setConstraints() {
-        NSLayoutConstraint.activate([self.authorLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor),
-                                     self.authorLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.authorLabel.heightAnchor.constraint(equalToConstant: 20),
-                                     self.authorLabel.widthAnchor.constraint(equalToConstant: screenSize-16),
-                                     
-                                     self.descriptionLabel.topAnchor.constraint(equalTo: self.myImage.bottomAnchor),
-                                     self.descriptionLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.descriptionLabel.heightAnchor.constraint(equalToConstant: 40),
-                                     self.descriptionLabel.widthAnchor.constraint(equalToConstant: screenSize-16),
-                                                                          
-                                     self.myImage.topAnchor.constraint(equalTo: self.contentView.topAnchor , constant: 20),
-                                     self.myImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.myImage.heightAnchor.constraint(equalToConstant: screenSize),
-                                     self.myImage.widthAnchor.constraint(equalToConstant: screenSize),
-                                     
-                                     self.likes.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-                                     self.likes.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: 10),
-                                     self.likes.heightAnchor.constraint(equalToConstant: 20),
-                                     self.likes.widthAnchor.constraint(equalToConstant: 80),
-                                     
-                                     self.views.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-                                     self.views.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor,constant: -40),
-                                     self.views.heightAnchor.constraint(equalToConstant: 20),
-                                     self.views.widthAnchor.constraint(equalToConstant: 80),
-        
-                                     self.textDescription.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-                                     self.textDescription.bottomAnchor.constraint(equalTo: self.myImage.bottomAnchor,constant: 40),
-                                     self.textDescription.heightAnchor.constraint(equalToConstant: screenSize/2),
-                                     self.textDescription.widthAnchor.constraint(equalToConstant: screenSize)])
+            NSLayoutConstraint.activate([self.labelStackView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+                                         self.labelStackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                         self.labelStackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+                                         self.labelStackView.heightAnchor.constraint(equalToConstant: 530),
+                                         
+                                         self.authorLabel.heightAnchor.constraint(equalToConstant: 20),
+                                         self.descriptionLabel.heightAnchor.constraint(equalToConstant: 60),
+
+                                         self.likesCountLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+                                         self.likesCountLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                         
+                                         self.viewsCountLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+                                         self.viewsCountLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+                                         
+                                         self.textDescription.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+                                         self.textDescription.bottomAnchor.constraint(equalTo: self.mainImage.bottomAnchor,constant: 40),
+                                         self.textDescription.heightAnchor.constraint(equalToConstant: 170),
+                                         self.textDescription.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)])
+        }
     }
-}
+
+
+
 
     
     
