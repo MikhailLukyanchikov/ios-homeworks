@@ -3,7 +3,6 @@ import UIKit
 class LogInViewController: UIViewController {
     
     let customColor = UIColor("#4885CC")
-    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
@@ -96,14 +95,11 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   //     setupNavBar()
         title = "Profile"
         self.view.backgroundColor = .white
         drawSelf()
     }
-    deinit {
-        viewDidDisappear(true)
-    }
+ 
     private func setupNavBar() {
         self.navigationItem.title = "Login"
         self.navigationController?.navigationBar.prefersLargeTitles = false
@@ -154,12 +150,13 @@ class LogInViewController: UIViewController {
     }
     @objc func buttonClicked() {
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
+        self.view.endEditing(true)
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }
     @objc private func kbdShow(notification: NSNotification) {
         if let kbdSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentInset.bottom = kbdSize.height+15
+            scrollView.contentInset.bottom = kbdSize.height+70
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0,left: 0, bottom: kbdSize.height, right: 0)
         }
     }
