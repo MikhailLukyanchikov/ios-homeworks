@@ -6,7 +6,6 @@ class LogInViewController: UIViewController {
     let defaultPass = "12345678"
     let defaultLogin = "admin"
     var labelStackViewTopAnchor : NSLayoutConstraint?
-   // self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -180,6 +179,47 @@ class LogInViewController: UIViewController {
         self.messageLabel.text = ""
         messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
+        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
+            else {
+                if self.textFieldLogin.text!.isEmpty {
+                    self.messageLabel.text = "Login is Empty"
+                    self.scrollView.addSubview(messageLabel)
+                    messageLabel.isHidden = false
+                    self.textFieldLogin.layer.borderWidth = 3
+                    self.textFieldLogin.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+                }
+                if self.textFieldPass.text!.isEmpty {
+                    self.messageLabel.text = "Password is Empty"
+                    self.textFieldPass.layer.borderWidth = 3
+                    self.textFieldPass.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
+                    messageLabel.isHidden = false
+                }
+                return
+            }
+            if self.textFieldPass.text!.count < 6 {
+                self.messageLabel.text = "Password too easy, minimum count is 6 symbol"
+                messageLabel.isHidden = false
+                return
+            }
+            guard self.textFieldLogin.text == self.defaultLogin && self.textFieldPass.text == self.defaultPass else {
+                if self.textFieldLogin.text != self.defaultLogin {
+                    let alert = UIAlertController(title: "Error", message: "Login Incorrect", preferredStyle: .alert)
+                    let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
+                    present(alert, animated: true, completion: nil)
+                    alert.addAction(buttonAllertYes)
+                    self.messageLabel.text = "Login incorrect, default is 'admin'"
+                    messageLabel.isHidden = false
+                }
+                if self.textFieldPass.text != self.defaultPass {
+                    let alert = UIAlertController(title: "Error", message: "Password Incorrect", preferredStyle: .alert)
+                    let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
+                    present(alert, animated: true, completion: nil)
+                    alert.addAction(buttonAllertYes)
+                    self.messageLabel.text = "Password incorrect, default is '12345678'"
+                    messageLabel.isHidden = false
+                }
+                return
+            }
         self.view.endEditing(true)
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
