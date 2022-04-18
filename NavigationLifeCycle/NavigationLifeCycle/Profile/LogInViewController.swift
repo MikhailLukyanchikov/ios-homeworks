@@ -5,6 +5,9 @@ class LogInViewController: UIViewController {
     let customColor = UIColor("#4885CC")
     let defaultPass = "12345678"
     let defaultLogin = "admin"
+    var labelStackViewTopAnchor : NSLayoutConstraint?
+   // self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .white
@@ -139,7 +142,9 @@ class LogInViewController: UIViewController {
         self.view.addSubview(self.iconImage)
         self.labelStackView.addArrangedSubview(self.textFieldLogin)
         self.labelStackView.addArrangedSubview(self.textFieldPass)
-  
+        labelStackViewTopAnchor = self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120)
+        labelStackViewTopAnchor?.priority = UILayoutPriority(999)
+        
         NSLayoutConstraint.activate([self.scrollView.topAnchor.constraint(equalTo: self.iconImage.bottomAnchor),
                                      self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -156,11 +161,11 @@ class LogInViewController: UIViewController {
                                      self.messageLabel.widthAnchor.constraint(equalToConstant: 50),
                                      self.messageLabel.heightAnchor.constraint(equalToConstant: 20),
                                      
-                                     self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120),
                                      self.labelStackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor,constant: 16),
                                      self.labelStackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor),
                                      self.labelStackView.heightAnchor.constraint(equalToConstant: 100),
                                      self.labelStackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor, constant: -32),
+                                     labelStackViewTopAnchor!,
                                      
                                      self.statusButton.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 16),
                                      self.statusButton.leadingAnchor.constraint(equalTo: self.labelStackView.leadingAnchor),
@@ -175,58 +180,22 @@ class LogInViewController: UIViewController {
         self.messageLabel.text = ""
         messageLabel.isHidden = true
         statusButton.alpha = (statusButton.isSelected && !statusButton.isEnabled && statusButton.isHighlighted) ? 0.8 : 1
-        guard (!self.textFieldLogin.text!.isEmpty)  && (!self.textFieldPass.text!.isEmpty)
-        else {
-            if self.textFieldLogin.text!.isEmpty {
-                self.messageLabel.text = "Login is Empty"
-                self.scrollView.addSubview(messageLabel)
-                messageLabel.isHidden = false
-                self.textFieldLogin.layer.borderWidth = 3
-                self.textFieldLogin.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-            }
-            if self.textFieldPass.text!.isEmpty {
-                self.messageLabel.text = "Password is Empty"
-                self.textFieldPass.layer.borderWidth = 3
-                self.textFieldPass.layer.borderColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
-                messageLabel.isHidden = false
-            }
-            return
-        }
-        if self.textFieldPass.text!.count < 6 {
-            self.messageLabel.text = "Password too easy, minimum count is 6 symbol"
-            messageLabel.isHidden = false
-            return
-        }
-        guard self.textFieldLogin.text == self.defaultLogin && self.textFieldPass.text == self.defaultPass else {
-            if self.textFieldLogin.text != self.defaultLogin {
-                let alert = UIAlertController(title: "Error", message: "Login Incorrect", preferredStyle: .alert)
-                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
-                present(alert, animated: true, completion: nil)
-                alert.addAction(buttonAllertYes)
-                self.messageLabel.text = "Login incorrect, default is 'admin'"
-                messageLabel.isHidden = false
-            }
-            if self.textFieldPass.text != self.defaultPass {
-                let alert = UIAlertController(title: "Error", message: "Password Incorrect", preferredStyle: .alert)
-                let buttonAllertYes = UIAlertAction(title: "Ok", style: .default, handler: .none)
-                present(alert, animated: true, completion: nil)
-                alert.addAction(buttonAllertYes)
-                self.messageLabel.text = "Password incorrect, default is '12345678'"
-                messageLabel.isHidden = false
-            }
-            return
-        }
         self.view.endEditing(true)
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }
     @objc private func kbdShow(notification: NSNotification) {
         if let kbdSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            scrollView.contentInset.bottom = kbdSize.height+70
+            labelStackViewTopAnchor?.isActive = false
+            self.labelStackViewTopAnchor = self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 45)
+            labelStackViewTopAnchor?.isActive = true
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0,left: 0, bottom: kbdSize.height, right: 0)
         }
     }
     @objc private func kbdHide(notification: NSNotification) {
+        labelStackViewTopAnchor?.isActive = false
+        self.labelStackViewTopAnchor = self.labelStackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 120)
+        labelStackViewTopAnchor?.isActive = true
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
