@@ -17,8 +17,6 @@ class ProfileViewController : UIViewController {
     private let tapGestureRecogniaer = UITapGestureRecognizer()
     private let tapLabelGestureRecogniaer = UITapGestureRecognizer()
 
-    private lazy var likesCount : Int = 0
-
     lazy var label : UILabel = {
         let secondButton = UILabel()
         secondButton.text = "X"
@@ -99,7 +97,6 @@ class ProfileViewController : UIViewController {
 }
 extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Posts-", posts.count+1)
         return posts.count+1
         
     }
@@ -112,17 +109,9 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
         }
       guard let cell = tableview.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell
     else { return UITableViewCell()}
-        cell.setNeedsLayout()
-        cell.setNeedsDisplay()
-        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description)
-        print("Index", indexPath)
         cell.delegate = self
         cell.viewDelegate = self
-        cell.setNeedsLayout()
-        cell.setNeedsDisplay()
-        cell.contentView.setNeedsDisplay()
-        cell.contentView.setNeedsLayout()
-        cell.contentView.reloadInputViews()
+        cell.configure(author: posts[indexPath.row-1].author, imageName: ((images[indexPath.row-1] ?? UIImage(named: "sport1"))!), description: posts[indexPath.row-1].description, like : posts[indexPath.row-1].likes, view : posts[indexPath.row-1].views )
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -149,9 +138,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
     }
 }
 extension ProfileViewController : PostTableViewProtocol {
-    func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void) {
-        likesCount = indexPath
-        print("LikeCount", likesCount)
+    func didTapLikeButton(indexPath: [Int], completion: @escaping () -> Void) {
         UIView.animate(withDuration: 0.3, delay: 0.3) {
         } completion: { _ in
             completion()
@@ -159,7 +146,7 @@ extension ProfileViewController : PostTableViewProtocol {
     }
 }
 extension ProfileViewController : PostTableViewImageProtocol {
-    func didTapViewButton(indexPath: Int, completion: @escaping () -> Void) {
+    func didTapViewButton(indexPath: [Int], completion: @escaping () -> Void) {
         UIView.animate(withDuration: 1) {
         } completion: { _ in
             completion()

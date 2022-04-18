@@ -8,10 +8,10 @@
 import UIKit
 
 protocol PostTableViewProtocol : AnyObject {
-    func didTapLikeButton(indexPath: Int, completion: @escaping () -> Void)
+    func didTapLikeButton(indexPath: [Int], completion: @escaping () -> Void)
 }
 protocol PostTableViewImageProtocol : AnyObject {
-    func didTapViewButton(indexPath: Int, completion: @escaping () -> Void)
+    func didTapViewButton(indexPath: [Int], completion: @escaping () -> Void)
 }
 class PostTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
@@ -20,10 +20,9 @@ class PostTableViewCell: UITableViewCell {
     private let tapViewGestureRecogniaer = UITapGestureRecognizer()
     weak var delegate : PostTableViewProtocol?
     weak var viewDelegate : PostTableViewImageProtocol?
-    var LikeCount = 0
-    var ViewCount = 0
+    var likeCount = Array(repeating: 0, count: posts.count+1)
+    var viewCount = Array(repeating: 0, count: posts.count+1)
     var isTapped = false
-    
     lazy var textDescription : UITextView = {
         let text = UITextView()
         text.textColor = .black
@@ -112,12 +111,12 @@ private lazy var authorLabel : UILabel = {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(author: String, imageName : UIImage, description : String) {
+    public func configure(author: String, imageName : UIImage, description : String, like : Int, view : Int) {
         authorLabel.text = author
         mainImage.image = imageName
         descriptionLabel.text = description
-        likesCountLabel.text = "Likes:" + String(self.LikeCount)
-        viewsCountLabel.text = "Views:" + String(self.ViewCount)
+        likesCountLabel.text = "Likes:" + String(like)
+        viewsCountLabel.text = "Views:" + String(view)
     }
     override func prepareForReuse() {
         authorLabel.text = nil
@@ -128,30 +127,40 @@ private lazy var authorLabel : UILabel = {
     }
     
     @objc func habdleTapGesture(_ gestureRecogniser: UITapGestureRecognizer) {
-  //     guard self.tapGestureRecogniaer === gestureRecogniser else { return}
-       self.delegate?.didTapLikeButton(indexPath: self.LikeCount){ [weak self] in
-            self?.LikeCount += 1
-            self?.likesCountLabel.text = "Likes:" + String((self?.LikeCount)!)
+       guard self.tapGestureRecogniaer === gestureRecogniser else { return}
+        let index = getIndexPath()?.row
+        self.delegate?.didTapLikeButton(indexPath: self.likeCount){ [weak self] in
+            self?.likeCount[index!] = self!.likeCount[index!] + 1
+            self?.likesCountLabel.text = "Likes:" + String((self?.likeCount[index!])!)
+            posts[index!-1].likes = self!.likeCount[index!]
             }
-       
     }
     @objc func habdleTapViewGesture(_ gestureRecogniser: UITapGestureRecognizer) {
- //       guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
-        self.viewDelegate?.didTapViewButton(indexPath: self.ViewCount){ [weak self] in
+        guard self.tapViewGestureRecogniaer === gestureRecogniser else { return }
+        let index = getIndexPath()?.row
+        self.viewDelegate?.didTapViewButton(indexPath: self.viewCount){ [weak self] in
          self?.isTapped.toggle()
             if self!.isTapped {
-                self?.ViewCount += 1
-                self?.viewsCountLabel.text = "Views:" + String((self?.ViewCount)!)
+                self?.viewCount[index!] = self!.viewCount[index!] + 1
+                self?.viewsCountLabel.text = "Views:" + String((self?.viewCount[index!])!)
+                posts[index!-1].views = self!.viewCount[index!]
                 self?.textDescription.text = self?.descriptionLabel.text
                 self?.textDescription.isHidden = false
             } else {
                 self?.textDescription.isHidden = true
             }
-            
             UIView.animate(withDuration: 1){
                  } completion: {_ in
                  }
              }
+    }
+    func getIndexPath() -> IndexPath? {
+        guard let superView = self.superview as? UITableView else {
+            print("superview is not a UITableView - getIndexPath")
+            return nil
+        }
+        let indexPath = superView.indexPath(for: self)
+        return indexPath
     }
 
     func setConstraints() {
@@ -175,6 +184,7 @@ private lazy var authorLabel : UILabel = {
                                          self.textDescription.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor)])
         }
     }
+
 
 
 
