@@ -136,6 +136,7 @@ extension ProfileViewController : UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(photosViewController, animated: true)
         }
     }
+    
 }
 extension ProfileViewController : PostTableViewProtocol {
     func didTapLikeButton(indexPath: [Int], completion: @escaping () -> Void) {

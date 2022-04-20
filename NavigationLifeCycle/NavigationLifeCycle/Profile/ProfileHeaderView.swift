@@ -13,7 +13,7 @@ protocol ProfileHeaderViewProtocol : AnyObject {
 }
 final class ProfileHeaderView: UIView {
     var imageViewAspectRatio : NSLayoutConstraint?
-    var isShow = true
+ //   var isShow = true
     weak var delegate : ProfileHeaderViewProtocol?
     private var currentStatus : String = ""
     
@@ -40,7 +40,6 @@ final class ProfileHeaderView: UIView {
     }()
     private lazy var statusLabel : UILabel = {
         let statusLabel = UILabel()
-
         statusLabel.text = "Waiting for something..."
         statusLabel.backgroundColor = .lightGray
         statusLabel.textColor = .darkGray
@@ -59,7 +58,7 @@ final class ProfileHeaderView: UIView {
         statusButton.layer.shadowRadius = 4
         statusButton.layer.shadowOpacity = 0.7
         statusButton.layer.shadowOpacity = 0.7
-        statusButton.setTitle("Show Status", for: .normal)
+        statusButton.setTitle("Set Status", for: .normal)
         statusButton.addTarget(self, action: #selector(self.didTapStatusButton), for: .touchUpInside)
         return statusButton
     }()
@@ -140,18 +139,17 @@ final class ProfileHeaderView: UIView {
                                     imageViewAspectRatio ].compactMap({$0}))
     }
     @objc private func didTapStatusButton() {
-        isShow.toggle()
-            if isShow {
-                textField.text = ""
-                statusButton.setTitle("Set Status", for: .normal)
-                statusLabel.text = currentStatus
-            } else {
-                statusButton.setTitle("Show Status", for: .normal)
-                currentStatus = !textField.text!.isEmpty ? textField.text! : "No status"
-            }
-        self.delegate?.didTapStatusButton(textFieldIsVisible: self.textField.isEnabled) { [weak self] in
-            self?.textField.isEnabled.toggle()
-
+        if textField.text!.isEmpty {
+            statusLabel.text = "No Status"
+            textField.layer.borderWidth = 2
+            textField.layer.borderColor = CGColor.init(red: 1, green: 0, blue: 0, alpha: 1)
+            return
         }
+        textField.layer.borderWidth = 1
+        textField.borderStyle = .line
+        textField.layer.borderColor = .none
+        statusLabel.text = textField.text
+        textField.text = ""
+        return
     }
 }

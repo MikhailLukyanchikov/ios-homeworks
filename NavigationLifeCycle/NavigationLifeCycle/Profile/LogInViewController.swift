@@ -219,7 +219,7 @@ class LogInViewController: UIViewController {
                     messageLabel.isHidden = false
                 }
                 return
-            }
+            } 
         self.view.endEditing(true)
         let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
